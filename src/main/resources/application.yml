@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  mvc:
+    static-path-pattern: /static/**
+    static-locations: classpath:/static/
+server:
+  port: 9999
+debug: true

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{/admin/_layout/common-head::common-head}">
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<body class="page-header-fixed">
+    <div th:replace="~{/admin/_layout/header::header}"></div>
+    <div class="page-container row-fluid">
+        <div th:replace="~{/admin/_layout/sidebar::sidebar}"></div>
+
+    </div>
+    <div th:replace="~{/admin/_layout/common-js::common-js}"></div>
+</body>
+</html>
