@@ -13,18 +13,21 @@ public class Article {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(nullable = false, length = 32)
     private String id;
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String title;
+    @Column(nullable = false)
+    private String author;
+    @Column(nullable = false)
     private String content;
     @Column(nullable = false)
-    private Date createDate;
-    private Date updateDate;
+    private Date createDt;
+    @Column(nullable = false)
+    private Date updateDt;
+    @Column(nullable = false)
+    private Date sortDt;
     @ManyToOne
-    @JoinColumn(name="article_menu_id")
-    private Menu menu;
-    @ManyToOne
-    @JoinColumn(name="article_creator_id")
-    private Admin creator;
+    @JoinColumn(name="article_class_id")
+    private ArticleClass articleClass;
 
     public String getId() {
         return id;
@@ -42,6 +45,14 @@ public class Article {
         this.title = title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getContent() {
         return content;
     }
@@ -50,35 +61,35 @@ public class Article {
         this.content = content;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreateDt() {
+        return createDt;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
     }
 
-    public Date getUpdateDate() {
-        return updateDate;
+    public Date getUpdateDt() {
+        return updateDt;
     }
 
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+    public void setUpdateDt(Date updateDt) {
+        this.updateDt = updateDt;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Date getSortDt() {
+        return sortDt;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void setSortDt(Date sortDt) {
+        this.sortDt = sortDt;
     }
 
-    public Admin getCreator() {
-        return creator;
+    public ArticleClass getArticleClass() {
+        return articleClass;
     }
 
-    public void setCreator(Admin creator) {
-        this.creator = creator;
+    public void setArticleClass(ArticleClass articleClass) {
+        this.articleClass = articleClass;
     }
 }

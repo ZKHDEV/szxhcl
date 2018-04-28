@@ -4,7 +4,7 @@
 <!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 
 <!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
-<head th:include="~{/admin/_layout/common-head::common-head('编辑新闻',~{::link})}">
+<head th:include="~{/admin/_layout/common-head::common-head(${#strings.isEmpty(model.id) ? '添加文章类别' : '修改文章类别'},~{::link})}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/select2_metro.css}" />
 </head>
 <body class="page-header-fixed">
@@ -46,13 +46,19 @@
 
                         <li>
 
-                            <a th:href="@{/admin/news}">新闻管理</a>
+                            <a th:href="@{/admin/article/list}">文章管理</a>
 
                             <i class="icon-angle-right"></i>
 
                         </li>
 
-                        <li><a href="#">添加新闻</a></li>
+                        <li>
+
+                            <a href="#" th:if="${#strings.isEmpty(model.id)}">添加文章类别</a>
+
+                            <a href="#" th:unless="${#strings.isEmpty(model.id)}">修改文章类别</a>
+
+                        </li>
 
                     </ul>
 
@@ -72,17 +78,49 @@
 
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
 
-                    <div class="portlet box green">
+                    <div th:class="${#strings.isEmpty(model.id) ? 'portlet box green' : 'portlet box blue'}">
 
                         <div class="portlet-title">
 
-                            <div class="caption"><i class="icon-reorder"></i>添加新闻</div>
+                            <div class="caption" th:if="${#strings.isEmpty(model.id)}"><i class="icon-reorder"></i>添加文章类别</div>
+
+                            <div class="caption" th:unless="${#strings.isEmpty(model.id)}"><i class="icon-reorder"></i>修改文章类别</div>
 
                         </div>
 
                         <div class="portlet-body form">
 
-                            <th:block th:replace="~{/admin/news/_form::news-form(@{/admin/news/create})}"></th:block>
+                            <!-- BEGIN FORM-->
+
+                            <form th:action="@{/admin/article/class/edit}" th:object="${model}" th:method="post" class="form-horizontal form-bordered form-row-stripped">
+
+                                <input type="hidden" name="id" th:field="*{id}">
+
+                                <div th:class="${(errors != null && errors['className'] != null) ? 'control-group error' : 'control-group'}">
+
+                                    <label class="control-label">类别名称<span class="required">*</span></label>
+
+                                    <div class="controls">
+
+                                        <input name="title" type="text" class="m-wrap span12" th:field="*{className}">
+
+                                        <span class="help-block" th:if="${errors != null && errors['title'] != null}" th:text="${errors['className']}"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-actions">
+
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+
+                                    <button type="button" class="btn" onclick="history.go(-1)">取消</button>
+
+                                </div>
+
+                            </form>
+
+                            <!-- END FORM-->
 
                         </div>
 
@@ -111,22 +149,11 @@
 
     <script th:src="@{/static/js/app.js}"></script>
 
-    <script th:src="@{/static/xheditor/xheditor-1.1.14-zh-cn.min.js}"></script>
-
     <script>
 
         jQuery(document).ready(function() {
 
             App.init();
-
-            $('#content-textarea').xheditor({
-                tools:'simple',
-                skin:'default',
-                width:'100%',
-                height:400,
-                upImgUrl:"upload.php",
-                upImgExt:"jpg,jpeg,gif,png"
-            });
 
         });
 

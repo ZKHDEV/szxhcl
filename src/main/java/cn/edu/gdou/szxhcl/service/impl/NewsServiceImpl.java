@@ -11,9 +11,14 @@ import cn.edu.gdou.szxhcl.service.NewsService;
 import cn.edu.gdou.szxhcl.utils.DateTimeUtil;
 import cn.edu.gdou.szxhcl.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,18 +57,28 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List<NewsVo> getNewsList(String classId, String title) {
-        List<News> newsList = null;
-        if(StringUtils.isEmpty(classId)){
-            newsList = newsDao.findAllByTitleLike(
-                    StringUtil.surround(title,"%")
-            );
-        } else {
-            newsList = newsDao.findAllByTitleLikeAndNewsClass_Id(
-                    StringUtil.surround(title,"%"),
-                    classId
-            );
-        }
+    public List<NewsVo> getNewsList(NewsQueryVo queryVo) {
+        List<News> newsList = newsDao.findAll(new Specification<News>(){
+            @Override
+            public Predicate toPredicate(Root<News> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList();
+
+                if(!StringUtils.isEmpty(queryVo.getClassId())){
+                    predicates.add(criteriaBuilder.equal(root.join("newsClass").get("id"), queryVo.getClassId()));
+                }
+
+                predicates.add(criteriaBuilder.like(root.get("title"), StringUtil.surround(queryVo.getTitle(), "%")));
+
+                if("1".equals(queryVo.getTop())){
+                    predicates.add(criteriaBuilder.isTrue(root.get("top")));
+                } else if("2".equals(queryVo.getTop())){
+                    predicates.add(criteriaBuilder.isFalse(root.get("top")));
+                }
+
+                criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()])));
+                return null;
+            }
+        });
 
         List<NewsVo> newsVoList = null;
         if(newsList != null && newsList.size() > 0){

@@ -6,30 +6,25 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "news")
-public class News {
+@Table(name = "slideshow")
+public class Slideshow {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(nullable = false, length = 32)
     private String id;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    private Byte source;
+    private String url;
     @Column(nullable = false)
-    private String author;
-    @Column(nullable = false)
-    private String content;
-    @Column(nullable = false)
-    private Boolean top;
+    private Boolean showed;
     @Column(nullable = false)
     private Date createDt;
     @Column(nullable = false)
     private Date updateDt;
-    @ManyToOne
-    @JoinColumn(name="news_class_id")
-    private NewsClass newsClass;
+    @Column(nullable = false)
+    private Date sortDt;
 
     public String getId() {
         return id;
@@ -47,36 +42,20 @@ public class News {
         this.title = title;
     }
 
-    public Byte getSource() {
-        return source;
+    public String getUrl() {
+        return url;
     }
 
-    public void setSource(Byte source) {
-        this.source = source;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getAuthor() {
-        return author;
+    public Boolean getShowed() {
+        return showed;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Boolean getTop() {
-        return top;
-    }
-
-    public void setTop(Boolean top) {
-        this.top = top;
+    public void setShowed(Boolean showed) {
+        this.showed = showed;
     }
 
     public Date getCreateDt() {
@@ -95,11 +74,11 @@ public class News {
         this.updateDt = updateDt;
     }
 
-    public NewsClass getNewsClass() {
-        return newsClass;
+    public Date getSortDt() {
+        return sortDt;
     }
 
-    public void setNewsClass(NewsClass newsClass) {
-        this.newsClass = newsClass;
+    public void setSortDt(Date sortDt) {
+        this.sortDt = sortDt;
     }
 }

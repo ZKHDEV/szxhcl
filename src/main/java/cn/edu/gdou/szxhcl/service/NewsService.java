@@ -8,7 +8,7 @@ import cn.edu.gdou.szxhcl.model.vo.news.NewsVo;
 import java.util.List;
 
 public interface NewsService {
-    List<NewsVo> getNewsList(String classId, String title);
+    List<NewsVo> getNewsList(NewsQueryVo queryVo);
     NewsVo getNews(String id);
     Boolean isNewsTitleExisted(String id, String title);
     NewsVo saveNews(NewsVo newsVo);

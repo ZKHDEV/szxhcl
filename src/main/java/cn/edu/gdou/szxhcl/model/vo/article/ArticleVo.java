@@ -1,25 +1,22 @@
-package cn.edu.gdou.szxhcl.model.vo.news;
+package cn.edu.gdou.szxhcl.model.vo.article;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
-public class NewsVo {
+public class ArticleVo {
     private String id;
     @NotEmpty(message = "必填")
     @Length(max = 32, message = "长度须小于32个字节")
     private String title;
-    @NotNull(message = "必填")
-    private Byte source;
     @NotEmpty(message = "必填")
     private String author;
     @NotEmpty(message = "必填")
     private String content;
     private String createDt;
     private String updateDt;
-    private Boolean top;
+    private String sortDt;
     @NotEmpty(message = "必填")
     private String classId;
     private String className;
@@ -38,14 +35,6 @@ public class NewsVo {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Byte getSource() {
-        return source;
-    }
-
-    public void setSource(Byte source) {
-        this.source = source;
     }
 
     public String getAuthor() {
@@ -80,12 +69,12 @@ public class NewsVo {
         this.updateDt = updateDt;
     }
 
-    public Boolean getTop() {
-        return top;
+    public String getSortDt() {
+        return sortDt;
     }
 
-    public void setTop(Boolean top) {
-        this.top = top;
+    public void setSortDt(String sortDt) {
+        this.sortDt = sortDt;
     }
 
     public String getClassId() {

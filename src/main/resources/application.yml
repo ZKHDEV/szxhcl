@@ -8,3 +8,8 @@ spring:
 server:
   port: 9999
 debug: true
+app:
+  upload:
+    images:
+      local-path: D:/szxhcl/upload/images/
+      url-path: /images/

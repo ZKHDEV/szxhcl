@@ -1,8 +1,8 @@
 package cn.edu.gdou.szxhcl.service.impl;
 
-import cn.edu.gdou.szxhcl.service.MenuService;
+import cn.edu.gdou.szxhcl.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MenuServiceImpl implements MenuService {
+public class UserServiceImpl implements UserService {
 }

@@ -1,9 +1,8 @@
-package cn.edu.gdou.szxhcl.model.vo.news;
+package cn.edu.gdou.szxhcl.model.vo.article;
 
-public class NewsQueryVo {
+public class ArticleQueryVo {
     private String classId;
     private String title;
-    private String top;
     private String author;
 
     public String getClassId() {
@@ -20,14 +19,6 @@ public class NewsQueryVo {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getTop() {
-        return top;
-    }
-
-    public void setTop(String top) {
-        this.top = top;
     }
 
     public String getAuthor() {

@@ -3,11 +3,12 @@ package cn.edu.gdou.szxhcl.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "news_class")
-public class NewsClass {
+@Table(name = "article_class")
+public class ArticleClass {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -15,8 +16,10 @@ public class NewsClass {
     private String id;
     @Column(nullable = false)
     private String className;
-    @OneToMany(cascade={CascadeType.REMOVE},mappedBy = "newsClass",fetch = FetchType.LAZY)
-    private List<News> newsList;
+    @Column(nullable = false)
+    private Date sortDt;
+    @OneToMany(cascade={CascadeType.REMOVE},mappedBy = "articleClass",fetch = FetchType.LAZY)
+    private List<Article> articleList;
 
     public String getId() {
         return id;
@@ -34,11 +37,19 @@ public class NewsClass {
         this.className = className;
     }
 
-    public List<News> getNewsList() {
-        return newsList;
+    public Date getSortDt() {
+        return sortDt;
     }
 
-    public void setNewsList(List<News> newsList) {
-        this.newsList = newsList;
+    public void setSortDt(Date sortDt) {
+        this.sortDt = sortDt;
+    }
+
+    public List<Article> getArticleList() {
+        return articleList;
+    }
+
+    public void setArticleList(List<Article> articleList) {
+        this.articleList = articleList;
     }
 }
