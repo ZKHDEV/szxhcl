@@ -6,11 +6,12 @@
 <!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
 <head th:include="~{/admin/_layout/common-head::common-head(${#strings.isEmpty(model.id) ? '添加新闻类别' : '修改新闻类别'},~{::link})}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/select2_metro.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/bootstrap-fileupload.css}" />
 </head>
 <body class="page-header-fixed">
 <div th:replace="~{/admin/_layout/header::header}"></div>
 <div class="page-container row-fluid">
-    <div th:replace="~{/admin/_layout/sidebar::sidebar}"></div>
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('news')}"></div>
 
     <!-- BEGIN PAGE -->
 
@@ -104,7 +105,43 @@
 
                                         <input name="title" type="text" class="m-wrap span12" th:field="*{className}">
 
-                                        <span class="help-block" th:if="${errors != null && errors['title'] != null}" th:text="${errors['className']}"></span>
+                                        <span class="help-block" th:if="${errors != null && errors['className'] != null}" th:text="${errors['className']}"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div th:class="${(errors != null && errors['banner'] != null) ? 'control-group error' : 'control-group'}">
+
+                                    <label class="control-label">类别Banner<span class="required">*</span></label>
+
+                                    <div class="controls">
+
+                                        <input type="hidden" id="banner" name="banner" th:field="*{banner}">
+
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+
+                                            <div class="fileupload-new thumbnail" style="width: 350px; height: 100px;">
+
+                                                <img id="img-prev" th:src="@{*{banner}}" alt="Banner">
+
+                                            </div>
+
+                                            <div class="fileupload-preview fileupload-exists thumbnail" style="width: 350px; height: 100px; line-height: 100px;"></div>
+
+                                            <div>
+
+                                                <span class="btn btn-file"><span class="fileupload-new">选择图片</span>
+
+                                                <span class="fileupload-exists">更改</span>
+
+												<input type="file" class="default" id="img-upload-input"></span>
+
+                                            </div>
+
+                                        </div>
+
+                                        <span class="help-block" th:if="${errors != null && errors['banner'] != null}" th:text="${errors['banner']}"></span>
 
                                     </div>
 
@@ -149,11 +186,42 @@
 
     <script th:src="@{/static/js/app.js}"></script>
 
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var upImgUrl = /*[[@{/admin/upload/image}]]*/ '';
+        /*]]>*/
+    </script>
+
     <script>
 
         jQuery(document).ready(function() {
 
             App.init();
+
+            $('#img-upload-input').change(function() {
+                if($(this).val()){
+                    $('#img-form').submit();
+
+                    var formData = new FormData();
+
+                    formData.append('filedata', $('#img-upload-input')[0].files[0]);
+                    $.ajax({
+                        url: upImgUrl,
+                        type: 'POST',
+                        cache: false,
+                        data: formData,
+                        processData: false,
+                        contentType: false
+                    }).success(function (data){
+                        if(!data.err){
+                            $("#img-prev").attr("src",data.msg);
+                            $("#banner").val(data.msg);
+                        } else {
+                            alert(data.err);
+                        }
+                    });
+                }
+            });
 
         });
 

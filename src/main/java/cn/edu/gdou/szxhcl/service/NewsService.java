@@ -13,7 +13,7 @@ public interface NewsService {
     Boolean isNewsTitleExisted(String id, String title);
     NewsVo saveNews(NewsVo newsVo);
     void deleteNews(String... ids);
-    void setTopNews(String id, Boolean isTop);
+    void sortNews(String id);
 
     List<NewsClassVo> getAllNewsClassList();
     NewsClassVo getNewsClass(String id);
@@ -21,4 +21,5 @@ public interface NewsService {
     NewsClassVo saveNewsClass(NewsClassVo newsClassVo);
     void deleteNewsClass(String... ids);
     Boolean hasNewsInNewsClass(String id);
+    void sortNewsClass(String id);
 }

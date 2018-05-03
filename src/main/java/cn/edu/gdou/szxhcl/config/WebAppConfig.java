@@ -9,9 +9,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
-    @Value("${app.upload.images.local-path}")
+    @Value("${app.upload.image.local-path}")
     private String imgUploadDir;
-    @Value("${app.upload.images.url-path}")
+    @Value("${app.upload.image.url-path}")
     private String imgUploadUrl;
 
     @Override

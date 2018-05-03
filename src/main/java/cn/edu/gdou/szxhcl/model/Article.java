@@ -13,10 +13,11 @@ public class Article {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(nullable = false, length = 32)
     private String id;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private String author;
+    @Lob
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)

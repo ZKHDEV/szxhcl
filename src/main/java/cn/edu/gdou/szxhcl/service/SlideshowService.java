@@ -12,4 +12,5 @@ public interface SlideshowService {
     void delete(String... ids);
     void sort(String id);
     void changShow(String id);
+    List<SlideshowVo> getShowList();
 }

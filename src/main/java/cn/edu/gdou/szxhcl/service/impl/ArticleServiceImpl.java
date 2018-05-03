@@ -19,9 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -49,12 +47,52 @@ public class ArticleServiceImpl implements ArticleService {
         return articleVo;
     }
 
+    private List<ArticleVo> parseArticleList(List<Article> articleList) {
+        List<ArticleVo> articleVoList = null;
+        if(articleList != null && articleList.size() > 0){
+            articleVoList = new ArrayList<>();
+            ArticleVo articleVo = null;
+            for(Article article : articleList){
+                articleVo = parseArticle(article, false);
+                articleVoList.add(articleVo);
+            }
+        }
+
+        return articleVoList;
+    }
+
     private ArticleClassVo parseArticleClass(ArticleClass articleClass){
         ArticleClassVo articleClassVo = new ArticleClassVo();
         articleClassVo.setId(articleClass.getId());
         articleClassVo.setClassName(articleClass.getClassName());
         articleClassVo.setSortDt(DateTimeUtil.dateToString(DateTimeUtil.YMDHMS, articleClass.getSortDt()));
+
+        List<ArticleVo> articleVoList = null;
+        List<Article> articleList = articleClass.getArticleList();
+        if(articleList != null && articleList.size() > 0) {
+            articleVoList = new ArrayList<>();
+            for(Article article : articleList) {
+                articleVoList.add(parseArticle(article,false));
+            }
+            Collections.sort(articleVoList);
+            articleClassVo.setArticleList(articleVoList);
+        }
+        
+        
         return articleClassVo;
+    }
+
+    private List<ArticleClassVo> parseArticleClassList(List<ArticleClass> articleClassList){
+        List<ArticleClassVo> articleClassVoList = null;
+
+        if(articleClassList != null && articleClassList.size() > 0){
+            articleClassVoList = new ArrayList<>();
+            for(ArticleClass articleClass : articleClassList){
+                articleClassVoList.add(parseArticleClass(articleClass));
+            }
+        }
+
+        return articleClassVoList;
     }
 
     @Override
@@ -76,22 +114,23 @@ public class ArticleServiceImpl implements ArticleService {
             }
         });
 
-        List<ArticleVo> articleVoList = null;
-        if(articleList != null && articleList.size() > 0){
-            articleVoList = new ArrayList<>();
-            ArticleVo articleVo = null;
-            for(Article article : articleList){
-                articleVo = parseArticle(article, false);
-                articleVoList.add(articleVo);
-            }
-        }
-
-        return articleVoList;
+        return parseArticleList(articleList);
     }
 
     @Override
     public ArticleVo getArticle(String id) {
         Article article = articleDao.findFirstById(id);
+
+        ArticleVo articleVo = null;
+        if(article != null){
+            articleVo = parseArticle(article, true);
+        }
+
+        return articleVo;
+    }
+    @Override
+    public ArticleVo getFirstArticle(){
+        Article article = articleDao.findFirstByIdIsNotNullOrderBySortDtDesc();
 
         ArticleVo articleVo = null;
         if(article != null){
@@ -150,16 +189,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleClassVo> getAllArticleClassList() {
         List<ArticleClass> articleClassList = articleClassDao.findAll();
-        List<ArticleClassVo> articleClassVoList = null;
 
-        if(articleClassList != null && articleClassList.size() > 0){
-            articleClassVoList = new ArrayList<>();
-            for(ArticleClass articleClass : articleClassList){
-                articleClassVoList.add(parseArticleClass(articleClass));
-            }
-        }
-
-        return articleClassVoList;
+        return parseArticleClassList(articleClassList);
     }
 
     @Override

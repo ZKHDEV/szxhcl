@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class NewsVo {
+public class NewsVo implements Comparable {
     private String id;
     @NotEmpty(message = "必填")
     @Length(max = 32, message = "长度须小于32个字节")
@@ -19,7 +19,7 @@ public class NewsVo {
     private String content;
     private String createDt;
     private String updateDt;
-    private Boolean top;
+    private String sortDt;
     @NotEmpty(message = "必填")
     private String classId;
     private String className;
@@ -80,12 +80,12 @@ public class NewsVo {
         this.updateDt = updateDt;
     }
 
-    public Boolean getTop() {
-        return top;
+    public String getSortDt() {
+        return sortDt;
     }
 
-    public void setTop(Boolean top) {
-        this.top = top;
+    public void setSortDt(String sortDt) {
+        this.sortDt = sortDt;
     }
 
     public String getClassId() {
@@ -102,5 +102,11 @@ public class NewsVo {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        NewsVo newsVo = (NewsVo)o;
+        return newsVo.getSortDt().compareTo(this.getSortDt());
     }
 }

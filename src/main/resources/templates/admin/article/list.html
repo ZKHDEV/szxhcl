@@ -11,7 +11,7 @@
 <body class="page-header-fixed">
 <div th:replace="~{/admin/_layout/header::header}"></div>
 <div class="page-container row-fluid">
-    <div th:replace="~{/admin/_layout/sidebar::sidebar}"></div>
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('article')}"></div>
 
     <!-- BEGIN PAGE -->
 
@@ -100,6 +100,8 @@
                                             </select>
 
                                             <input type="text" name="title" placeholder="文章标题" class="m-wrap medium" th:value="*{title}">
+
+                                            <input type="text" name="author" placeholder="作者" class="m-wrap medium" th:value="*{author}">
 
                                             <button type="submit" class="btn blue" style="position: relative;top: -7px">查询</button>
 

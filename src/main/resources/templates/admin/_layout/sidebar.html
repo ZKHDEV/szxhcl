@@ -11,7 +11,7 @@
 <body>
 <!-- BEGIN SIDEBAR -->
 
-<div class="page-sidebar nav-collapse collapse" th:fragment="sidebar">
+<div class="page-sidebar nav-collapse collapse" th:fragment="sidebar(pageType)">
 
     <!-- BEGIN SIDEBAR MENU -->
 
@@ -27,31 +27,35 @@
 
         </li>
 
-        <li class="start ">
+        <li th:class="${pageType == 'index' ? 'start active' : 'start'}">
 
-            <a href="index.html">
+            <a href="#">
 
                 <i class="icon-home"></i>
 
                 <span class="title">管理首页</span>
 
+                <span th:if="${pageType == 'index'}" class="selected"></span>
+
             </a>
 
         </li>
 
-        <li>
+        <li th:class="${pageType == 'news' ? 'active open' : ''}">
 
-            <a class="active" th:href="@{/admin/news/list}">
+            <a th:href="@{/admin/news/list}">
 
                 <i class="icon-bullhorn"></i>
 
                 <span class="title">新闻管理</span>
 
-                <span class="arrow "></span>
+                <span th:if="${pageType == 'news'}" class="selected"></span>
+
+                <span th:class="${pageType == 'news' ? 'arrow open' : 'arrow'}"></span>
 
             </a>
 
-            <ul class="sub-menu">
+            <ul class="sub-menu" th:style="${pageType == 'news' ? 'display: block;' : ''}">
 
                 <li>
 
@@ -87,7 +91,7 @@
 
         </li>
 
-        <li>
+        <li th:class="${pageType == 'article' ? 'active open' : ''}">
 
             <a class="active" th:href="@{/admin/article/list}">
 
@@ -95,11 +99,13 @@
 
                 <span class="title">文章管理</span>
 
-                <span class="arrow "></span>
+                <span th:if="${pageType == 'article'}" class="selected"></span>
+
+                <span th:class="${pageType == 'article' ? 'arrow open' : 'arrow'}"></span>
 
             </a>
 
-            <ul class="sub-menu">
+            <ul class="sub-menu" th:style="${pageType == 'article' ? 'display: block;' : ''}">
 
                 <li>
 
@@ -135,19 +141,47 @@
 
         </li>
 
-        <li>
+        <li th:class="${pageType == 'link' ? 'active open' : ''}">
 
-            <a th:href="@{/admin/slideshow/list}">
+            <a class="active" th:href="@{/admin/link/list}">
 
-                <i class="icon-picture"></i>
+                <i class="icon-map-marker"></i>
 
-                <span class="title">图片管理</span>
+                <span class="title">链接管理</span>
+
+                <span th:if="${pageType == 'link'}" class="selected"></span>
+
+                <span th:class="${pageType == 'link' ? 'arrow open' : 'arrow'}"></span>
 
             </a>
 
+            <ul class="sub-menu" th:style="${pageType == 'link' ? 'display: block;' : ''}">
+
+                <li>
+
+                    <a th:href="@{/admin/link/edit}">
+
+                        添加链接
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/admin/link/list}">
+
+                        链接管理
+
+                    </a>
+
+                </li>
+
+            </ul>
+
         </li>
 
-        <li>
+        <li th:class="${pageType == 'other' ? 'active open' : ''}">
 
             <a href="javascript:;">
 
@@ -155,11 +189,13 @@
 
                 <span class="title">常规设置</span>
 
-                <span class="arrow "></span>
+                <span th:if="${pageType == 'other'}" class="selected"></span>
+
+                <span th:class="${pageType == 'other' ? 'arrow open' : 'arrow'}"></span>
 
             </a>
 
-            <ul class="sub-menu">
+            <ul class="sub-menu" th:style="${pageType == 'other' ? 'display: block;' : ''}">
 
                 <li>
 
@@ -173,9 +209,19 @@
 
                 <li>
 
-                    <a href="javascript:;">
+                    <a th:href="@{/admin/intro/edit}">
 
                         课程简介
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/admin/slideshow/list}">
+
+                        图片管理
 
                     </a>
 
@@ -213,9 +259,9 @@
 
                 <li>
 
-                    <a href="#">
+                    <a th:href="@{/admin/comment/list}">
 
-                        论坛管理
+                        留言管理
 
                     </a>
 

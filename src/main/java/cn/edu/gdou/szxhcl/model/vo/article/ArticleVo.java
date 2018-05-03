@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
-public class ArticleVo {
+public class ArticleVo implements Comparable {
     private String id;
     @NotEmpty(message = "必填")
     @Length(max = 32, message = "长度须小于32个字节")
@@ -91,5 +91,11 @@ public class ArticleVo {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        ArticleVo articleVo = (ArticleVo)o;
+        return articleVo.getSortDt().compareTo(this.getSortDt());
     }
 }

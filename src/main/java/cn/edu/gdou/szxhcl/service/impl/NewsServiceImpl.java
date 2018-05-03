@@ -19,9 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class NewsServiceImpl implements NewsService {
@@ -38,7 +36,7 @@ public class NewsServiceImpl implements NewsService {
         newsVo.setAuthor(news.getAuthor());
         newsVo.setCreateDt(DateTimeUtil.dateToString(DateTimeUtil.YMDHMS, news.getCreateDt()));
         newsVo.setUpdateDt(DateTimeUtil.dateToString(DateTimeUtil.YMDHMS, news.getUpdateDt()));
-        newsVo.setTop(news.getTop());
+        newsVo.setSortDt(DateTimeUtil.dateToString(DateTimeUtil.YMDHMS, news.getSortDt()));
         newsVo.setClassName(news.getNewsClass().getClassName());
         newsVo.setClassId(news.getNewsClass().getId());
 
@@ -49,11 +47,52 @@ public class NewsServiceImpl implements NewsService {
         return newsVo;
     }
 
+    private List<NewsVo> parseNewsList(List<News> newsList) {
+        List<NewsVo> newsVoList = null;
+        if(newsList != null && newsList.size() > 0){
+            newsVoList = new ArrayList<>();
+            NewsVo newsVo = null;
+            for(News news : newsList){
+                newsVo = parseNews(news, false);
+                newsVoList.add(newsVo);
+            }
+        }
+
+        return newsVoList;
+    }
+
     private NewsClassVo parseNewsClass(NewsClass newsClass){
         NewsClassVo newsClassVo = new NewsClassVo();
         newsClassVo.setId(newsClass.getId());
         newsClassVo.setClassName(newsClass.getClassName());
+        newsClassVo.setBanner(newsClass.getBanner());
+
+        List<NewsVo> newsVoList = null;
+        List<News> newsList = newsClass.getNewsList();
+        if(newsList != null && newsList.size() > 0) {
+            newsVoList = new ArrayList<>();
+            for(News news : newsList) {
+                newsVoList.add(parseNews(news,false));
+            }
+            Collections.sort(newsVoList);
+            newsClassVo.setNewsList(newsVoList);
+        }
+
+
         return newsClassVo;
+    }
+
+    private List<NewsClassVo> parseNewsClassList(List<NewsClass> newsClassList) {
+        List<NewsClassVo> newsClassVoList = null;
+
+        if(newsClassList != null && newsClassList.size() > 0){
+            newsClassVoList = new ArrayList<>();
+            for(NewsClass newsClass : newsClassList){
+                newsClassVoList.add(parseNewsClass(newsClass));
+            }
+        }
+
+        return newsClassVoList;
     }
 
     @Override
@@ -68,29 +107,14 @@ public class NewsServiceImpl implements NewsService {
                 }
 
                 predicates.add(criteriaBuilder.like(root.get("title"), StringUtil.surround(queryVo.getTitle(), "%")));
-
-                if("1".equals(queryVo.getTop())){
-                    predicates.add(criteriaBuilder.isTrue(root.get("top")));
-                } else if("2".equals(queryVo.getTop())){
-                    predicates.add(criteriaBuilder.isFalse(root.get("top")));
-                }
+                predicates.add(criteriaBuilder.like(root.get("author"), StringUtil.surround(queryVo.getAuthor(), "%")));
 
                 criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()])));
                 return null;
             }
         });
 
-        List<NewsVo> newsVoList = null;
-        if(newsList != null && newsList.size() > 0){
-            newsVoList = new ArrayList<>();
-            NewsVo newsVo = null;
-            for(News news : newsList){
-                newsVo = parseNews(news, false);
-                newsVoList.add(newsVo);
-            }
-        }
-
-        return newsVoList;
+        return parseNewsList(newsList);
     }
 
     @Override
@@ -121,7 +145,7 @@ public class NewsServiceImpl implements NewsService {
         if(news == null){
             news = new News();
             news.setCreateDt(new Date());
-            news.setTop(false);
+            news.setSortDt(new Date());
         }
 
         NewsClass newsClass = newsClassDao.findFirstById(newsVo.getClassId());
@@ -146,30 +170,17 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public void setTopNews(String id, Boolean isTop) {
+    public void sortNews(String id) {
         News news = newsDao.findFirstById(id);
-        if((news.getTop() && isTop)
-                || (!news.getTop() && !isTop)){
-            return;
-        }
-
-        news.setTop(isTop);
+        news.setSortDt(new Date());
         newsDao.save(news);
     }
 
     @Override
     public List<NewsClassVo> getAllNewsClassList() {
         List<NewsClass> newsClassList = newsClassDao.findAll();
-        List<NewsClassVo> newsClassVoList = null;
 
-        if(newsClassList != null && newsClassList.size() > 0){
-            newsClassVoList = new ArrayList<>();
-            for(NewsClass newsClass : newsClassList){
-                newsClassVoList.add(parseNewsClass(newsClass));
-            }
-        }
-
-        return newsClassVoList;
+        return parseNewsClassList(newsClassList);
     }
 
     @Override
@@ -199,9 +210,11 @@ public class NewsServiceImpl implements NewsService {
 
         if(newsClass == null){
             newsClass = new NewsClass();
+            newsClass.setSortDt(new Date());
         }
 
         newsClass.setClassName(newsClassVo.getClassName());
+        newsClass.setBanner(newsClassVo.getBanner());
 
         newsClassDao.save(newsClass);
 
@@ -226,5 +239,12 @@ public class NewsServiceImpl implements NewsService {
         }
 
         return hasNews;
+    }
+
+    @Override
+    public void sortNewsClass(String id) {
+        NewsClass newsClass = newsClassDao.findFirstById(id);
+        newsClass.setSortDt(new Date());
+        newsClassDao.save(newsClass);
     }
 }

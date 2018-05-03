@@ -1,13 +1,15 @@
 package cn.edu.gdou.szxhcl.controller.admin;
 
+import cn.edu.gdou.szxhcl.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController {
-    @RequestMapping("index")
+@RequestMapping("admin")
+public class AdminController extends BaseController {
+    @RequestMapping("/")
     public String index(ModelMap model){
-        return "admin/news";
+        return redirectTo("/admin/news/list");
     }
 }

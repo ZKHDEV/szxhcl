@@ -11,7 +11,7 @@
 <body class="page-header-fixed">
 <div th:replace="~{/admin/_layout/header::header}"></div>
 <div class="page-container row-fluid">
-    <div th:replace="~{/admin/_layout/sidebar::sidebar}"></div>
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('news')}"></div>
 
     <!-- BEGIN PAGE -->
 
@@ -122,6 +122,8 @@
                                         <a class="edit" th:href="@{'/admin/news/class/edit/'+${newsClass.id}}">修改</a>
 
                                         <a class="delete" th:href="@{'/admin/news/class/delete/'+${newsClass.id}}" onclick="return confirm('确定要删除吗？(注意：栏目下的新闻也将被全部删除！！！)')">删除</a>
+
+                                        <a th:href="@{'/admin/news/class/sort/'+${article.id}}">排序</a>
 
                                     </td>
 

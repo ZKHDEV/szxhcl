@@ -9,6 +9,7 @@ import java.util.List;
 public interface ArticleService {
     List<ArticleVo> getArticleList(ArticleQueryVo queryVo);
     ArticleVo getArticle(String id);
+    ArticleVo getFirstArticle();
     Boolean isArticleTitleExisted(String id, String title);
     ArticleVo saveArticle(ArticleVo articleVo);
     void deleteArticle(String... ids);

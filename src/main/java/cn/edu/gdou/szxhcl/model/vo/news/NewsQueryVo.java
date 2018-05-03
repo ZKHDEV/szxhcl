@@ -3,7 +3,6 @@ package cn.edu.gdou.szxhcl.model.vo.news;
 public class NewsQueryVo {
     private String classId;
     private String title;
-    private String top;
     private String author;
 
     public String getClassId() {
@@ -20,14 +19,6 @@ public class NewsQueryVo {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getTop() {
-        return top;
-    }
-
-    public void setTop(String top) {
-        this.top = top;
     }
 
     public String getAuthor() {

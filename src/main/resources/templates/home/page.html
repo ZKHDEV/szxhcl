@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{/home/_layout/common-head::common-noarg-head}">
+</head>
+<body>
+<div th:replace="~{/home/_layout/header::header}"></div>
+<div class="container">
+    <div class="page-content-top">
+        <div class="section-bg"></div>
+        <h1 th:text="${model.className}"></h1>
+    </div>
+    <div class="page-content">
+        <div class="left-page-content">
+            <div class="nav-section">
+                <div class="section-bg"></div>
+                <ul>
+                    <li th:each="item : ${modelList}">
+                        <a th:href="@{'/' + ${type} + '/' + ${item.id}}" th:text="${item.title}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-page-content">
+            <div class="bread-nav">
+                <ul>
+                    <li>
+                        <a th:href="@{/}">首页</a>&nbsp;>&nbsp;
+                    </li>
+                    <li>
+                        <a th:href="@{'/' + ${type}}" th:text="${model.className}"></a>&nbsp;>&nbsp;
+                    </li>
+                    <li>
+                        <a th:href="@{'/' + ${type} + '/' + ${model.id}}" th:text="${model.title}"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-section">
+                <div class="section-head">
+                    <h1 th:text="${model.title}"></h1>
+                </div>
+                <div class="section-content" th:utext="${model.content}"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div th:replace="~{/home/_layout/footer::footer}"></div>
+<th:block th:include="~{/home/_layout/common-js::common-noarg-js}">
+</th:block>
+</body>
+</html>

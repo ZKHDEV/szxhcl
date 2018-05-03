@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface SlideshowDao extends CrudRepository<Slideshow,String> {
     List<Slideshow> findAll();
+    List<Slideshow> findAllByShowedIsTrueOrderBySortDtDesc();
     Slideshow findFirstById(String id);
 }

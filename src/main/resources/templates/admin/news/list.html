@@ -11,7 +11,7 @@
 <body class="page-header-fixed">
 <div th:replace="~{/admin/_layout/header::header}"></div>
 <div class="page-container row-fluid">
-    <div th:replace="~{/admin/_layout/sidebar::sidebar}"></div>
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('news')}"></div>
 
     <!-- BEGIN PAGE -->
 
@@ -103,16 +103,6 @@
 
                                             <input type="text" name="author" placeholder="作者" class="m-wrap medium" th:value="*{author}">
 
-                                            <select class="small m-wrap" style="margin-bottom: 12px" name="top" th:field="*{top}">
-
-                                                <option value="0">不考虑置顶</option>
-
-                                                <option value="1">置顶</option>
-
-                                                <option value="2">不置顶</option>
-
-                                            </select>
-
                                             <button type="submit" class="btn blue" style="position: relative;top: -7px">查询</button>
 
                                         </form>
@@ -183,9 +173,7 @@
 
                                         <a class="delete" th:href="@{'/admin/news/delete/'+${news.id}}" onclick="return confirm('确定要删除吗？')">删除</a>
 
-                                        <a th:if="${news.top == true}" th:href="@{'/admin/news/rm_top/'+${news.id}}">取消置顶</a>
-
-                                        <a th:if="${news.top == false}" th:href="@{'/admin/news/add_top/'+${news.id}}">置顶</a>
+                                        <a th:href="@{'/admin/news/sort/'+${news.id}}">排序</a>
 
                                     </td>
 

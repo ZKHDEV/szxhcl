@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{/home/_layout/common-head::common-head(~{::link})}">
+    <link rel="stylesheet" th:href="@{/static/css/pageSwitch.min.css}">
+</head>
+<body>
+    <div th:replace="~{/home/_layout/header::header}"></div>
+    <div class="container">
+        <div class="slideshow" id="slideshow">
+            <div class="sections">
+                <div class="section" th:id="'section' + ${itemStat.index}" th:each="item,itemStat : ${slideshowList}" th:style="'background-image: url(' + @{${item.url}} + ')'">
+                    <a th:href="@{${item.url}}">
+                        <span th:text="${item.title}"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="left-content">
+                <div class="section">
+                    <div class="main-section">
+                        <div class="section-head">
+                            <h1>课程简介</h1>
+                        </div>
+                        <div class="section-content" th:utext="${introduces}"></div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="sub-section" th:each="cls : ${newsClassList}">
+                        <div class="section-img-head">
+                            <div class="section-bg" th:style="'background-image:url(' + @{${cls.banner}} + ')'"></div>
+                            <h1 th:text="${cls.className}"></h1>
+                        </div>
+                        <div class="section-content">
+                            <ul>
+                                <li th:each="news : ${cls.newsList}">
+                                    <a href="#" th:title="${news.title}" th:text="${news.title}"></a>
+                                    <span th:text="${news.createDt}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="nav-section">
+                    <div class="section-bg"></div>
+                    <ul>
+                        <li>
+                            <a href="#">课程介绍</a>
+                        </li>
+                        <li>
+                            <a href="#">互动平台</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="link-section">
+                    <div class="section-head">
+                        <h1>友情链接</h1>
+                    </div>
+                    <div class="section-content">
+                        <ul>
+                            <li th:each="item : ${linkList}">
+                                <a target="_blank" th:href="${item.url}" th:text="${item.title}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div th:replace="~{/home/_layout/footer::footer}"></div>
+    <th:block th:include="~{/home/_layout/common-js::common-js(~{::script})}">
+        <script th:src="@{/static/js/pageSwitch.min.js}"></script>
+        <script>
+            $("#slideshow").PageSwitch({
+                direction: 'horizontal',
+                easing: 'ease-in',
+                duration: 1000,
+                autoPlay: true,
+                pagination: true
+            });
+        </script>
+    </th:block>
+</body>
+</html>

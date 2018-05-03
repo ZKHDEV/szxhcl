@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body th:fragment="common-js(scripts)">
+<script th:src="@{/static/js/jquery-1.12.4.min.js}"></script>
+<th:block th:replace="${scripts}"></th:block>
+<script th:src="@{/static/js/app2.js}"></script>
+</body>
+
+<body th:fragment="common-noarg-js">
+<script th:src="@{/static/js/jquery-1.12.4.min.js}"></script>
+<script th:src="@{/static/js/app2.js}"></script>
+</body>
+
+</html>

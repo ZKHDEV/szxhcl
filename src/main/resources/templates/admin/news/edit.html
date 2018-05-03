@@ -10,7 +10,7 @@
 <body class="page-header-fixed">
 <div th:replace="~{/admin/_layout/header::header}"></div>
 <div class="page-container row-fluid">
-    <div th:replace="~{/admin/_layout/sidebar::sidebar}"></div>
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('news')}"></div>
 
     <!-- BEGIN PAGE -->
 
@@ -225,6 +225,12 @@
 
     <script th:src="@{/static/xheditor/xheditor-1.1.14-zh-cn.min.js}"></script>
 
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var upImgUrl = /*[[@{/admin/upload/image}]]*/ '';
+        /*]]>*/
+    </script>
+
     <script>
 
         jQuery(document).ready(function() {
@@ -236,8 +242,9 @@
                 skin:'default',
                 width:'100%',
                 height:400,
-                upImgUrl:"upload.php",
-                upImgExt:"jpg,jpeg,gif,png"
+                html5Upload : false,
+                upImgUrl:upImgUrl,
+                upImgExt:"jpg,jpeg,gif,bmp,png"
             });
 
         });

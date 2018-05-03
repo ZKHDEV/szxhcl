@@ -1,16 +1,15 @@
 package cn.edu.gdou.szxhcl.model.vo;
 
 public class Response {
-    private Integer code;
+    private String err;
     private String msg;
-    private Object data;
 
-    public Integer getCode() {
-        return code;
+    public String getErr() {
+        return err;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setErr(String err) {
+        this.err = err;
     }
 
     public String getMsg() {
@@ -19,27 +18,5 @@ public class Response {
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public Response() {
-    }
-
-    public Response(Integer code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
-
-    public Response(Integer code, String msg, Object data) {
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
     }
 }

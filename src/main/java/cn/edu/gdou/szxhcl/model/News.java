@@ -13,16 +13,17 @@ public class News {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(nullable = false, length = 32)
     private String id;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private Byte source;
     @Column(nullable = false)
     private String author;
+    @Lob
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)
-    private Boolean top;
+    private Date sortDt;
     @Column(nullable = false)
     private Date createDt;
     @Column(nullable = false)
@@ -71,12 +72,12 @@ public class News {
         this.content = content;
     }
 
-    public Boolean getTop() {
-        return top;
+    public Date getSortDt() {
+        return sortDt;
     }
 
-    public void setTop(Boolean top) {
-        this.top = top;
+    public void setSortDt(Date sortDt) {
+        this.sortDt = sortDt;
     }
 
     public Date getCreateDt() {

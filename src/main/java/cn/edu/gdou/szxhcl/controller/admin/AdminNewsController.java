@@ -77,15 +77,9 @@ public class AdminNewsController extends BaseController {
         return "/admin/news/list";
     }
 
-    @GetMapping("add_top/{id}")
-    public String addTop(ModelMap model, @PathVariable("id") String id){
-        newsService.setTopNews(id, true);
-        return redirectTo("/admin/news/list");
-    }
-
-    @GetMapping("rm_top/{id}")
-    public String rmTop(ModelMap model, @PathVariable("id") String id){
-        newsService.setTopNews(id, false);
+    @GetMapping("sort/{id}")
+    public String sort(ModelMap model, @PathVariable("id") String id){
+        newsService.sortNews(id);
         return redirectTo("/admin/news/list");
     }
 
@@ -143,6 +137,12 @@ public class AdminNewsController extends BaseController {
         }
 
         newsService.saveNewsClass(newsClassVo);
+        return redirectTo("/admin/news/class/list");
+    }
+
+    @GetMapping("class/sort/{id}")
+    public String sortClass(ModelMap model, @PathVariable("id") String id){
+        newsService.sortNewsClass(id);
         return redirectTo("/admin/news/class/list");
     }
 

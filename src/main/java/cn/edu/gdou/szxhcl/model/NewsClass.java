@@ -3,6 +3,7 @@ package cn.edu.gdou.szxhcl.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,10 @@ public class NewsClass {
     private String id;
     @Column(nullable = false)
     private String className;
+    @Column(nullable = false)
+    private Date sortDt;
+    @Column(nullable = false)
+    private String banner;
     @OneToMany(cascade={CascadeType.REMOVE},mappedBy = "newsClass",fetch = FetchType.LAZY)
     private List<News> newsList;
 
@@ -32,6 +37,22 @@ public class NewsClass {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public Date getSortDt() {
+        return sortDt;
+    }
+
+    public void setSortDt(Date sortDt) {
+        this.sortDt = sortDt;
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
     }
 
     public List<News> getNewsList() {

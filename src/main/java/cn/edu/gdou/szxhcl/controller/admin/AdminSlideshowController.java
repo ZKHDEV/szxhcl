@@ -1,6 +1,7 @@
 package cn.edu.gdou.szxhcl.controller.admin;
 
 import cn.edu.gdou.szxhcl.controller.BaseController;
+import cn.edu.gdou.szxhcl.exception.FileHandlerException;
 import cn.edu.gdou.szxhcl.model.Slideshow;
 import cn.edu.gdou.szxhcl.model.vo.slideshow.SlideshowVo;
 import cn.edu.gdou.szxhcl.service.SlideshowService;
@@ -27,10 +28,6 @@ import java.util.Map;
 @RequestMapping("admin/slideshow")
 public class AdminSlideshowController extends BaseController {
 
-    @Value("${app.upload.images.local-path}")
-    private String imgUploadDir;
-    @Value("${app.upload.images.url-path}")
-    private String imgUploadUrl;
 
     private final static String[] ALLOW_IMG_TYPES = { "JPG","JPEG","PNG","GIF","BMP" };
 
@@ -46,38 +43,16 @@ public class AdminSlideshowController extends BaseController {
 
     @PostMapping("upload")
     public String upload(ModelMap model, HttpServletRequest request, @RequestParam(value="file",required=true) MultipartFile file) throws IOException {
-        if(file != null){
-            if(file.getSize() < 1000000L){
-                String fileName = file.getOriginalFilename();
-                String type = fileName.indexOf(".")!=-1 ? fileName.substring(fileName.lastIndexOf(".")+1,fileName.length()) : null;
 
-                if(!StringUtils.isEmpty(type)
-                        && Arrays.asList(ALLOW_IMG_TYPES).contains(type.toUpperCase())){
+        try {
+            String imgUrl = uploadImg(file);
+            SlideshowVo slideshowVo = new SlideshowVo();
+            slideshowVo.setUrl(imgUrl);
 
-                    String tarDirUrl = imgUploadDir;
-                    File tarDir = new File(tarDirUrl);
-                    if(!tarDir.exists()){
-                        tarDir.mkdirs();
-                    }
-
-                    String tarFileName = String.valueOf(System.currentTimeMillis())+fileName.substring(0,fileName.lastIndexOf("."))+".JPG";
-                    String tarFullPath = tarDirUrl + tarFileName;
-                    file.transferTo(new File(tarFullPath));
-
-                    SlideshowVo slideshowVo = new SlideshowVo();
-                    slideshowVo.setUrl(imgUploadUrl + tarFileName);
-                    
-                    model.put("model", slideshowVo);
-                    return view("admin/slideshow/edit");
-
-                } else {
-                    model.put("errors", "文件类型错误！");
-                }
-            } else {
-                model.put("errors", "文件须小于1MB！");
-            }
-        }else{
-            model.put("errors", "文件不能为空！");
+            model.put("model", slideshowVo);
+            return view("admin/slideshow/edit");
+        } catch (FileHandlerException e) {
+            model.put("errors", e.getMessage());
         }
 
         return view("admin/slideshow/list");

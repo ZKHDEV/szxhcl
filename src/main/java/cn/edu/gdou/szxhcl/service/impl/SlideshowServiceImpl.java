@@ -31,9 +31,7 @@ public class SlideshowServiceImpl implements SlideshowService {
         return slideshowVo;
     }
 
-    @Override
-    public List<SlideshowVo> getList() {
-        List<Slideshow> slideshowList = slideshowDao.findAll();
+    private List<SlideshowVo> parseSlideshowList(List<Slideshow> slideshowList){
         List<SlideshowVo> slideshowVoList = null;
         if(slideshowList != null && slideshowList.size() > 0){
             slideshowVoList = new ArrayList<>();
@@ -45,6 +43,13 @@ public class SlideshowServiceImpl implements SlideshowService {
         }
 
         return slideshowVoList;
+    }
+
+    @Override
+    public List<SlideshowVo> getList() {
+        List<Slideshow> slideshowList = slideshowDao.findAll();
+
+        return parseSlideshowList(slideshowList);
     }
 
     @Override
@@ -102,5 +107,12 @@ public class SlideshowServiceImpl implements SlideshowService {
         Slideshow slideshow = slideshowDao.findFirstById(id);
         slideshow.setShowed(!slideshow.getShowed());
         slideshowDao.save(slideshow);
+    }
+
+    @Override
+    public List<SlideshowVo> getShowList() {
+        List<Slideshow> slideshowList = slideshowDao.findAllByShowedIsTrueOrderBySortDtDesc();
+
+        return parseSlideshowList(slideshowList);
     }
 }
