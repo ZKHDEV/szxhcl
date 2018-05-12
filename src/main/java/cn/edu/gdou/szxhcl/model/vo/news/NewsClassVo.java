@@ -12,6 +12,7 @@ public class NewsClassVo {
     private String className;
     @NotEmpty(message = "必填")
     private String banner;
+    private String sortDt;
     private List<NewsVo> newsList;
 
     public String getId() {
@@ -44,5 +45,13 @@ public class NewsClassVo {
 
     public void setNewsList(List<NewsVo> newsList) {
         this.newsList = newsList;
+    }
+
+    public String getSortDt() {
+        return sortDt;
+    }
+
+    public void setSortDt(String sortDt) {
+        this.sortDt = sortDt;
     }
 }

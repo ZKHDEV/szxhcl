@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:include="~{/admin/_layout/common-head::common-head('资源管理',~{::link})}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/select2_metro.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/DT_bootstrap.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/bootstrap-fileupload.css}" />
+</head>
+<body class="page-header-fixed">
+<div th:replace="~{/admin/_layout/header::header}"></div>
+<div class="page-container row-fluid">
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('resource')}"></div>
+
+    <!-- BEGIN PAGE -->
+
+    <div class="page-content">
+
+        <!-- BEGIN PAGE CONTAINER-->
+
+        <div class="container-fluid">
+
+            <!-- BEGIN PAGE HEADER-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+                    <h3 class="page-title">
+
+                    </h3>
+
+                    <ul class="breadcrumb">
+
+                        <li>
+
+                            <i class="icon-home"></i>
+
+                            <a th:href="@{/admin/}">管理首页</a>
+
+                            <i class="icon-angle-right"></i>
+
+                        </li>
+
+                        <li><a href="#">资源管理</a></li>
+
+                    </ul>
+
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN PAGE CONTENT-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+                    <div class="portlet box grey">
+
+                        <div class="portlet-title">
+
+                            <div class="caption"><i class="icon-reorder"></i>资源管理</div>
+
+                        </div>
+
+                        <div class="portlet-body">
+
+                            <div class="clearfix">
+
+                                <div class="row-fluid">
+
+                                    <div class="span10">
+
+                                        <form th:action="@{/admin/resource/list}" th:method="get" th:object="${query}">
+
+                                            <select class="small m-wrap" style="margin-bottom: 12px" name="classId" th:field="*{classId}">
+
+                                                <option value="">全部类别</option>
+
+                                                <option th:each="item : ${classList}" th:value="${item.id}" th:text="${item.className}"></option>
+
+                                            </select>
+
+                                            <select class="small m-wrap" style="margin-bottom: 12px" name="type" th:field="*{type}">
+
+                                                <option value="">全部类型</option>
+
+                                                <option value="PPT">PPT</option>
+
+                                                <option value="Word">Word</option>
+
+                                                <option value="Excel">Excel</option>
+
+                                                <option value="PDF">PDF</option>
+
+                                                <option value="纯文本">纯文本</option>
+
+                                                <option value="视频">视频</option>
+
+                                                <option value="音频">音频</option>
+
+                                                <option value="图片">图片</option>
+
+                                                <option value="其它">其它</option>
+
+                                            </select>
+
+                                            <input type="text" name="fileName" placeholder="文件名" class="m-wrap medium" th:value="*{fileName}">
+
+                                            <input type="text" name="uploader" placeholder="上传者" class="m-wrap medium" th:value="*{uploader}">
+
+                                            <button type="submit" class="btn blue" style="position: relative;top: -7px">查询</button>
+
+                                        </form>
+
+                                        <form id="file-form" th:action="@{/admin/resource/upload}" th:method="post" enctype="multipart/form-data">
+
+                                            <div class="fileupload fileupload-new" data-provides="fileupload">
+
+                                                <span class="btn yellow btn-file">
+
+                                                    <span class="fileupload-new">添加资源</span>
+
+												    <span class="fileupload-exists">修改</span>
+
+												    <input id="file-upload-input" type="file" name="file" class="default"/>
+
+                                                </span>
+
+                                                <span class="fileupload-preview"></span>
+
+                                                <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none"></a>
+
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+
+                                    <div class="span2">
+
+                                        <div class="btn-group pull-right">
+
+                                            <button class="btn green dropdown-toggle" data-toggle="dropdown">批量操作 <i class="icon-angle-down"></i>
+
+                                            </button>
+
+                                            <ul class="dropdown-menu pull-right">
+
+                                                <li><a class="del-batch" href="javascript:;" th:tarUrl="@{/admin/resource/delete_batch}">删除所选</a></li>
+
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <table class="table table-striped table-bordered table-hover model-list-table" id="resource-table">
+
+                                <thead>
+
+                                <tr>
+
+                                    <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#resource-table .checkboxes" /></th>
+
+                                    <th>文件名</th>
+
+                                    <th>资源类别</th>
+
+                                    <th>类型</th>
+
+                                    <th>Url</th>
+
+                                    <th>文件大小</th>
+
+                                    <th>上传者</th>
+
+                                    <th>下载次数</th>
+
+                                    <th>发布时间</th>
+
+                                    <th>备注</th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                <tr class="odd gradeX" th:each="resource : ${list}">
+
+                                    <td><input type="checkbox" class="checkboxes" th:value="${resource.id}" /></td>
+
+                                    <td th:text="${resource.fileName}"></td>
+
+                                    <td th:text="${resource.className}"></td>
+
+                                    <td th:text="${resource.type}"></td>
+
+                                    <td th:text="${resource.url}"></td>
+
+                                    <td th:text="${resource.size}"></td>
+
+                                    <td th:text="${resource.uploader}"></td>
+
+                                    <td th:text="${resource.downNum}"></td>
+
+                                    <td th:text="${resource.uploadDt}"></td>
+
+                                    <td th:text="${resource.remarks}"></td>
+
+                                    <td>
+
+                                        <a th:href="@{${resource.url}}" target="_blank">查看</a>
+
+                                        <a class="edit" th:href="@{'/admin/resource/edit/'+${resource.id}}">修改</a>
+
+                                        <a class="delete" th:href="@{'/admin/resource/delete/'+${resource.id}}" onclick="return confirm('确定要删除吗？')">删除</a>
+
+                                    </td>
+
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <!-- END EXAMPLE TABLE PORTLET-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE CONTENT-->
+
+        </div>
+
+        <!-- END PAGE CONTAINER-->
+
+    </div>
+
+    <!-- END PAGE -->
+
+</div>
+<div th:replace="~{/admin/_layout/footer::footer}"></div>
+<th:block th:replace="~{/admin/_layout/common-js::common-js(~{::script})}">
+    <script type="text/javascript" th:src="@{/static/js/select2.min.js}"></script>
+
+    <script type="text/javascript" th:src="@{/static/js/jquery.dataTables.js}"></script>
+
+    <script type="text/javascript" th:src="@{/static/js/DT_bootstrap.js}"></script>
+
+    <script th:src="@{/static/js/app.js}"></script>
+
+    <script th:src="@{/static/js/custom-table-managed.js}"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var errors = /*[[${errors}]]*/ '';
+        /*]]>*/
+    </script>
+
+    <script>
+
+        jQuery(document).ready(function() {
+
+            App.init();
+
+            TableManaged.init();
+
+            if(errors){
+                alert(errors);
+            }
+
+            $('#file-upload-input').change(function() {
+                if($(this).val()){
+                    $('#file-form').submit();
+                }
+            });
+
+        });
+
+    </script>
+</th:block>
+</body>
+</html>

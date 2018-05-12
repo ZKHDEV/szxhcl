@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 8]> <html lang="en" class="ie8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"> <![endif]-->
 
-<!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"> <![endif]-->
 
-<!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"> <!--<![endif]-->
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -29,7 +29,7 @@
 
         <li th:class="${pageType == 'index' ? 'start active' : 'start'}">
 
-            <a href="#">
+            <a th:href="@{/admin/}">
 
                 <i class="icon-home"></i>
 
@@ -41,7 +41,7 @@
 
         </li>
 
-        <li th:class="${pageType == 'news' ? 'active open' : ''}">
+        <li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${pageType == 'news' ? 'active open' : ''}">
 
             <a th:href="@{/admin/news/list}">
 
@@ -91,7 +91,7 @@
 
         </li>
 
-        <li th:class="${pageType == 'article' ? 'active open' : ''}">
+        <li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${pageType == 'article' ? 'active open' : ''}">
 
             <a class="active" th:href="@{/admin/article/list}">
 
@@ -141,7 +141,87 @@
 
         </li>
 
-        <li th:class="${pageType == 'link' ? 'active open' : ''}">
+        <li sec:authorize="hasRole('ROLE_ADMIN') OR hasRole('ROLE_TEACHER')" th:class="${pageType == 'resource' ? 'active open' : ''}">
+
+            <a class="active" th:href="@{/admin/resource/list}">
+
+                <i class="icon-cloud"></i>
+
+                <span class="title">资源管理</span>
+
+                <span th:if="${pageType == 'resource'}" class="selected"></span>
+
+                <span th:class="${pageType == 'resource' ? 'arrow open' : 'arrow'}"></span>
+
+            </a>
+
+            <ul class="sub-menu" th:style="${pageType == 'resource' ? 'display: block;' : ''}">
+
+                <li>
+
+                    <a th:href="@{/admin/resource/list}">
+
+                        资源管理
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/admin/resource/class/list}">
+
+                        资源类别
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </li>
+
+        <li sec:authorize="hasRole('ROLE_ADMIN') OR hasRole('ROLE_TEACHER')" th:class="${pageType == 'homework' ? 'active open' : ''}">
+
+            <a class="active" th:href="@{/admin/homework/list}">
+
+                <i class="icon-tasks"></i>
+
+                <span class="title">作业管理</span>
+
+                <span th:if="${pageType == 'homework'}" class="selected"></span>
+
+                <span th:class="${pageType == 'homework' ? 'arrow open' : 'arrow'}"></span>
+
+            </a>
+
+            <ul class="sub-menu" th:style="${pageType == 'homework' ? 'display: block;' : ''}">
+
+                <li>
+
+                    <a th:href="@{/admin/homework/edit}">
+
+                        添加作业
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/admin/homework/list}">
+
+                        作业管理
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </li>
+
+        <li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${pageType == 'link' ? 'active open' : ''}">
 
             <a class="active" th:href="@{/admin/link/list}">
 
@@ -181,7 +261,7 @@
 
         </li>
 
-        <li th:class="${pageType == 'other' ? 'active open' : ''}">
+        <li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${pageType == 'other' ? 'active open' : ''}">
 
             <a href="javascript:;">
 
@@ -197,15 +277,15 @@
 
             <ul class="sub-menu" th:style="${pageType == 'other' ? 'display: block;' : ''}">
 
-                <li>
+                <!--<li>-->
 
-                    <a href="javascript:;">
+                    <!--<a href="javascript:;">-->
 
-                        配置信息
+                        <!--配置信息-->
 
-                    </a>
+                    <!--</a>-->
 
-                </li>
+                <!--</li>-->
 
                 <li>
 
@@ -227,15 +307,15 @@
 
                 </li>
 
-                <li>
+                <!--<li>-->
 
-                    <a href="#">
+                    <!--<a href="#">-->
 
-                        在线考试系统管理
+                        <!--在线考试系统管理-->
 
-                    </a>
+                    <!--</a>-->
 
-                </li>
+                <!--</li>-->
 
                 <li>
 
@@ -247,15 +327,15 @@
 
                 </li>
 
-                <li>
+                <!--<li>-->
 
-                    <a href="#">
+                    <!--<a href="#">-->
 
-                        底部信息
+                        <!--底部信息-->
 
-                    </a>
+                    <!--</a>-->
 
-                </li>
+                <!--</li>-->
 
                 <li>
 
@@ -269,13 +349,29 @@
 
             </ul>
 
-            <ul class="sub-menu">
+        </li>
+
+        <li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${pageType == 'user' ? 'active open' : ''}">
+
+            <a class="active" th:href="@{/admin/user/list}">
+
+                <i class="icon-user"></i>
+
+                <span class="title">用户管理</span>
+
+                <span th:if="${pageType == 'user'}" class="selected"></span>
+
+                <span th:class="${pageType == 'user' ? 'arrow open' : 'arrow'}"></span>
+
+            </a>
+
+            <ul class="sub-menu" th:style="${pageType == 'user' ? 'display: block;' : ''}">
 
                 <li>
 
-                    <a href="javascript:;">
+                    <a th:href="@{/admin/user/edit}">
 
-                        添加文章
+                        添加用户
 
                     </a>
 
@@ -283,19 +379,9 @@
 
                 <li>
 
-                    <a href="javascript:;">
+                    <a th:href="@{/admin/user/list}">
 
-                        文章管理
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="#">
-
-                        文章分类
+                        用户管理
 
                     </a>
 

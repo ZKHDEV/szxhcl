@@ -4,6 +4,7 @@ import cn.edu.gdou.szxhcl.controller.BaseController;
 import cn.edu.gdou.szxhcl.model.vo.link.LinkVo;
 import cn.edu.gdou.szxhcl.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("admin/link")
+@Secured("ROLE_ADMIN")
 public class AdminLinkController extends BaseController {
     @Autowired
     private LinkService linkService;

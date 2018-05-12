@@ -10,5 +10,5 @@ public interface ArticleDao extends CrudRepository<Article,String>, JpaSpecifica
     Article findFirstById(String id);
     Long countAllByTitleAndIdNot(String title, String id);
     List<Article> findAllByIdIsNotNullOrderBySortDtDesc();
-    Article findFirstByIdIsNotNullOrderBySortDtDesc();
+    Article findFirstByArticleClass_IdOrderBySortDtDesc(String id);
 }

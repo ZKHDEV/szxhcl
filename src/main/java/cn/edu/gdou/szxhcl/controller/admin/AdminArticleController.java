@@ -6,6 +6,7 @@ import cn.edu.gdou.szxhcl.model.vo.article.ArticleQueryVo;
 import cn.edu.gdou.szxhcl.model.vo.article.ArticleVo;
 import cn.edu.gdou.szxhcl.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("admin/article")
+@Secured("ROLE_ADMIN")
 public class AdminArticleController extends BaseController {
     @Autowired
     private ArticleService articleService;

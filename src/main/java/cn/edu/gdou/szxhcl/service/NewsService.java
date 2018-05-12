@@ -1,6 +1,7 @@
 package cn.edu.gdou.szxhcl.service;
 
 import cn.edu.gdou.szxhcl.model.News;
+import cn.edu.gdou.szxhcl.model.vo.article.ArticleVo;
 import cn.edu.gdou.szxhcl.model.vo.news.NewsClassVo;
 import cn.edu.gdou.szxhcl.model.vo.news.NewsQueryVo;
 import cn.edu.gdou.szxhcl.model.vo.news.NewsVo;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface NewsService {
     List<NewsVo> getNewsList(NewsQueryVo queryVo);
     NewsVo getNews(String id);
+    NewsVo getFirstNewsByClassId(String classId);
     Boolean isNewsTitleExisted(String id, String title);
     NewsVo saveNews(NewsVo newsVo);
     void deleteNews(String... ids);

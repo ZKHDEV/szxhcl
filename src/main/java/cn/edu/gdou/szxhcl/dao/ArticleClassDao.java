@@ -8,5 +8,6 @@ import java.util.List;
 public interface ArticleClassDao extends CrudRepository<ArticleClass,String> {
     ArticleClass findFirstById(String id);
     List<ArticleClass> findAll();
+    List<ArticleClass> findAllByIdIsNotNullOrderBySortDtDesc();
     Long countAllByClassNameAndIdNot(String className, String id);
 }

@@ -66,6 +66,7 @@ public class NewsServiceImpl implements NewsService {
         newsClassVo.setId(newsClass.getId());
         newsClassVo.setClassName(newsClass.getClassName());
         newsClassVo.setBanner(newsClass.getBanner());
+        newsClassVo.setSortDt(DateTimeUtil.dateToString(DateTimeUtil.YMDHMS, newsClass.getSortDt()));
 
         List<NewsVo> newsVoList = null;
         List<News> newsList = newsClass.getNewsList();
@@ -120,6 +121,18 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsVo getNews(String id) {
         News news = newsDao.findFirstById(id);
+
+        NewsVo newsVo = null;
+        if(news != null){
+            newsVo = parseNews(news, true);
+        }
+
+        return newsVo;
+    }
+
+    @Override
+    public NewsVo getFirstNewsByClassId(String classId){
+        News news = newsDao.findFirstByNewsClass_IdOrderBySortDtDesc(classId);
 
         NewsVo newsVo = null;
         if(news != null){

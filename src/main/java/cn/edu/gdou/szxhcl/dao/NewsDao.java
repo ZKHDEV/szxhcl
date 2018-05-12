@@ -9,4 +9,5 @@ import java.util.List;
 public interface NewsDao extends CrudRepository<News,String>, JpaSpecificationExecutor<News> {
     News findFirstById(String id);
     Long countAllByTitleAndIdNot(String title, String id);
+    News findFirstByNewsClass_IdOrderBySortDtDesc(String id);
 }

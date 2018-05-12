@@ -23,8 +23,6 @@ import java.util.Map;
 
 public class BaseController {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    private UploadImgConfig imgConfig;
 
     protected String view(String view){
         return view;
@@ -51,43 +49,5 @@ public class BaseController {
         return map;
     }
 
-    protected String uploadImg(MultipartFile file) throws FileHandlerException {
 
-        if(file != null){
-            if(file.getSize() < imgConfig.getMaxSize()){
-                String fileName = file.getOriginalFilename();
-                String type = fileName.indexOf(".")!=-1 ? fileName.substring(fileName.lastIndexOf(".")+1,fileName.length()) : null;
-
-                if(!StringUtils.isEmpty(type)
-                        && imgConfig.getAllowTypes().toUpperCase().indexOf(type.toUpperCase()) != -1){
-
-                    String tarDirUrl = imgConfig.getLocalPath();
-                    File tarDir = new File(tarDirUrl);
-
-                    if(!tarDir.exists()){
-                        tarDir.mkdirs();
-                    }
-
-                    String tarFileName = imgConfig.getFileNameTemplate()
-                            .replaceAll("\\$TIMESTAMP\\$", String.valueOf(System.currentTimeMillis()))
-                            .replaceAll("\\$FILENAME\\$", fileName);
-                    String tarFullPath = tarDirUrl + tarFileName;
-                    try {
-                        file.transferTo(new File(tarFullPath));
-                    } catch (IOException e) {
-                        throw new FileHandlerException(e);
-                    }
-
-                    return imgConfig.getUrlPath() + tarFileName;
-
-                } else {
-                    throw new FileHandlerException("文件类型错误！");
-                }
-            } else {
-                throw new FileHandlerException("文件须小于" + imgConfig.getMaxSize()/1000 + "KB！");
-            }
-        }else{
-            throw new FileHandlerException("文件不能为空！");
-        }
-    }
 }

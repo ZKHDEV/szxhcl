@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:include="~{/admin/_layout/common-head::common-head('设置密码',~{::link})}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/select2_metro.css}" />
+</head>
+<body class="page-header-fixed">
+<div th:replace="~{/admin/_layout/header::header}"></div>
+<div class="page-container row-fluid">
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('user')}"></div>
+
+    <!-- BEGIN PAGE -->
+
+    <div class="page-content">
+
+        <!-- BEGIN PAGE CONTAINER-->
+
+        <div class="container-fluid">
+
+            <!-- BEGIN PAGE HEADER-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+                    <h3 class="page-title">
+
+                    </h3>
+
+                    <ul class="breadcrumb">
+
+                        <li>
+
+                            <i class="icon-home"></i>
+
+                            <a th:href="@{/admin/}">管理首页</a>
+
+                            <i class="icon-angle-right"></i>
+
+                        </li>
+
+                        <li>
+
+                            <a th:href="@{/admin/user/list}">用户管理</a>
+
+                            <i class="icon-angle-right"></i>
+
+                        </li>
+
+                        <li>
+
+                            <a href="#">设置密码</a>
+
+                        </li>
+
+                    </ul>
+
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN PAGE CONTENT-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+                    <div class="portlet box blue">
+
+                        <div class="portlet-title">
+
+                            <div class="caption"><i class="icon-reorder"></i>设置密码</div>
+
+                        </div>
+
+                        <div class="portlet-body form">
+
+                            <!-- BEGIN FORM-->
+
+                            <form th:action="@{/admin/user/set_psd}" th:object="${model}" th:method="post" class="form-horizontal form-bordered form-row-stripped">
+
+                                <input type="hidden" name="id" th:field="*{id}">
+
+                                <div th:class="${(errors != null && errors['password'] != null) ? 'control-group error' : 'control-group'}">
+
+                                    <label class="control-label">密码<span class="required">*</span></label>
+
+                                    <div class="controls">
+
+                                        <input name="title" type="text" class="m-wrap span12" th:field="*{password}">
+
+                                        <span class="help-block" th:if="${errors != null && errors['password'] != null}" th:text="${errors['password']}"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-actions">
+
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+
+                                    <button type="button" class="btn" onclick="history.go(-1)">取消</button>
+
+                                </div>
+
+                            </form>
+
+                            <!-- END FORM-->
+
+                        </div>
+
+                    </div>
+
+                    <!-- END EXAMPLE TABLE PORTLET-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE CONTENT-->
+
+        </div>
+
+        <!-- END PAGE CONTAINER-->
+
+    </div>
+
+    <!-- END PAGE -->
+
+</div>
+<div th:replace="~{/admin/_layout/footer::footer}"></div>
+<th:block th:replace="~{/admin/_layout/common-js::common-js(~{::script})}">
+    <script type="text/javascript" th:src="@{/static/js/select2.min.js}"></script>
+
+    <script th:src="@{/static/js/app.js}"></script>
+
+    <script>
+
+        jQuery(document).ready(function() {
+
+            App.init();
+
+        });
+
+    </script>
+</th:block>
+</body>
+</html>

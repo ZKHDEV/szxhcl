@@ -2,7 +2,9 @@ package cn.edu.gdou.szxhcl.model.vo.comment;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class CommentVo {
+import java.util.List;
+
+public class CommentVo implements Comparable {
     private String id;
     @NotEmpty(message = "必填")
     private String title;
@@ -14,6 +16,9 @@ public class CommentVo {
     private String content;
     private Boolean top;
     private String createDt;
+    private String updateDt;
+    private Integer replyNum;
+    private List<CommentVo> chiCommList;
 
     public String getId() {
         return id;
@@ -69,5 +74,35 @@ public class CommentVo {
 
     public void setCreateDt(String createDt) {
         this.createDt = createDt;
+    }
+
+    public Integer getReplyNum() {
+        return replyNum;
+    }
+
+    public void setReplyNum(Integer replyNum) {
+        this.replyNum = replyNum;
+    }
+
+    public List<CommentVo> getChiCommList() {
+        return chiCommList;
+    }
+
+    public void setChiCommList(List<CommentVo> chiCommList) {
+        this.chiCommList = chiCommList;
+    }
+
+    public String getUpdateDt() {
+        return updateDt;
+    }
+
+    public void setUpdateDt(String updateDt) {
+        this.updateDt = updateDt;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        CommentVo commentVo = (CommentVo)o;
+        return commentVo.getCreateDt().compareTo(this.getCreateDt());
     }
 }

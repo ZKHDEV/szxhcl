@@ -38,7 +38,7 @@
 
                             <i class="icon-home"></i>
 
-                            <a th:href="@{/admin}">管理首页</a>
+                            <a th:href="@{/admin/}">管理首页</a>
 
                             <i class="icon-angle-right"></i>
 
@@ -200,6 +200,7 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         var upImgUrl = /*[[@{/admin/upload/image}]]*/ '';
+        var upLinkUrl = /*[[@{/admin/upload/file}]]*/ '';
         /*]]>*/
     </script>
 
@@ -210,13 +211,15 @@
             App.init();
 
             $('#content-textarea').xheditor({
-                tools:'simple',
+                tools:'full',
                 skin:'default',
                 width:'100%',
                 height:400,
                 html5Upload : false,
                 upImgUrl:upImgUrl,
-                upImgExt:"jpg,jpeg,gif,bmp,png"
+                upLinkUrl:upLinkUrl,
+                upImgExt:"jpg,jpeg,gif,bmp,png",
+                upLinkExt:"zip,rar,txt,ppt,pptx,doc,docx,pps,xlsx,xls,csv,pdf"
             });
 
         });

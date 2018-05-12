@@ -6,6 +6,7 @@ import cn.edu.gdou.szxhcl.model.vo.news.NewsQueryVo;
 import cn.edu.gdou.szxhcl.model.vo.news.NewsVo;
 import cn.edu.gdou.szxhcl.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("admin/news")
+@Secured("ROLE_ADMIN")
 public class AdminNewsController extends BaseController {
 
     @Autowired

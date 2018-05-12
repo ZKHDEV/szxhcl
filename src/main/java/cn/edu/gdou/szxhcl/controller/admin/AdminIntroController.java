@@ -4,6 +4,7 @@ import cn.edu.gdou.szxhcl.controller.BaseController;
 import cn.edu.gdou.szxhcl.model.vo.Introduces.IntroducesVo;
 import cn.edu.gdou.szxhcl.service.IntroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("admin/intro")
+@Secured("ROLE_ADMIN")
 public class AdminIntroController extends BaseController {
 
     @Autowired

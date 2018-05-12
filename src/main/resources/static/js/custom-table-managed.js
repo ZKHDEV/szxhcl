@@ -73,9 +73,10 @@ var TableManaged = function () {
                     null,
                     null,
                     null,
+                    null,
                     { "bSortable": false }
                 ],
-                "order": [[ 4, "desc" ]],
+                "aaSorting": [[ 5, "desc" ]],
                 "aLengthMenu": [
                     [10, 15, 20, -1],
                     [10, 15, 20, "All"] // change per page values here
@@ -88,7 +89,7 @@ var TableManaged = function () {
                 "oLanguage": oLanguage,
                 "aoColumnDefs": [{
                         'bSortable': false,
-                        'aTargets': [0,5]
+                        'aTargets': [0,6]
                     }
                 ]
             });
@@ -97,9 +98,10 @@ var TableManaged = function () {
             $('#news-class-table').dataTable({
                 "aoColumns": [
                     null,
+                    null,
                     { "bSortable": false }
                 ],
-                "order": [[ 0, "asc" ]],
+                "aaSorting": [[ 1, "desc" ]],
                 "aLengthMenu": [
                     [10, 15, 20, -1],
                     [10, 15, 20, "All"] // change per page values here
@@ -123,7 +125,7 @@ var TableManaged = function () {
                     null,
                     { "bSortable": false }
                 ],
-                "order": [[ 4, "desc" ]],
+                "aaSorting": [[ 5, "desc" ]],
                 "aLengthMenu": [
                     [10, 15, 20, -1],
                     [10, 15, 20, "All"] // change per page values here
@@ -148,7 +150,7 @@ var TableManaged = function () {
                     null,
                     { "bSortable": false }
                 ],
-                "order": [[ 1, "desc" ]],
+                "aaSorting": [[ 1, "desc" ]],
                 "aLengthMenu": [
                     [10, 15, 20, -1],
                     [10, 15, 20, "All"] // change per page values here
@@ -171,35 +173,7 @@ var TableManaged = function () {
                     null,
                     { "bSortable": false }
                 ],
-                "order": [[ 3, "desc" ]],
-                "aLengthMenu": [
-                    [10, 15, 20, -1],
-                    [10, 15, 20, "All"] // change per page values here
-                ],
-                // set the initial value
-                "bFilter": false,
-                "iDisplayLength": 10,
-                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-                "sPaginationType": "bootstrap",
-                "oLanguage": oLanguage,
-                "aoColumnDefs": [{
-                    'bSortable': false,
-                    'aTargets': [0,5]
-                }
-                ]
-            });
-
-            //comment table
-            $('#comment-table').dataTable({
-                "aoColumns": [
-                    { "bSortable": false },
-                    null,
-                    null,
-                    null,
-                    null,
-                    { "bSortable": false }
-                ],
-                "order": [[ 4, "desc" ]],
+                "aaSorting": [[ 4, "desc" ]],
                 "aLengthMenu": [
                     [10, 15, 20, -1],
                     [10, 15, 20, "All"] // change per page values here
@@ -225,7 +199,7 @@ var TableManaged = function () {
                     null,
                     { "bSortable": false }
                 ],
-                "order": [[ 1, "asc" ]],
+                "aaSorting": [[ 1, "asc" ]],
                 "aLengthMenu": [
                     [10, 15, 20, -1],
                     [10, 15, 20, "All"] // change per page values here
@@ -239,6 +213,180 @@ var TableManaged = function () {
                 "aoColumnDefs": [{
                     'bSortable': false,
                     'aTargets': [0,3]
+                }
+                ]
+            });
+
+            //comment table
+            $('#comment-table').dataTable({
+                "aoColumns": [
+                    { "bSortable": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "bSortable": false }
+                ],
+                "aaSorting": [[ 6, "desc" ]],
+                "aLengthMenu": [
+                    [10, 15, 20, -1],
+                    [10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "bFilter": false,
+                "iDisplayLength": 10,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": oLanguage,
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [0,7]
+                }
+                ]
+            });
+
+            //reply table
+            $('#reply-table').dataTable({
+                "aoColumns": [
+                    { "bSortable": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "bSortable": false }
+                ],
+                "aaSorting": [[ 5, "desc" ]],
+                "aLengthMenu": [
+                    [10, 15, 20, -1],
+                    [10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "bFilter": false,
+                "iDisplayLength": 10,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": oLanguage,
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [0,6]
+                }
+                ]
+            });
+
+            //user table
+            $('#user-table').dataTable({
+                "aoColumns": [
+                    { "bSortable": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "bSortable": false }
+                ],
+                "aaSorting": [[ 9, "desc" ]],
+                "aLengthMenu": [
+                    [10, 15, 20, -1],
+                    [10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "bFilter": false,
+                "iDisplayLength": 10,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": oLanguage,
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [0,10]
+                }
+                ]
+            });
+
+            //resource table
+            $('#resource-table').dataTable({
+                "aoColumns": [
+                    { "bSortable": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "bSortable": false }
+                ],
+                "aaSorting": [[ 8, "desc" ]],
+                "aLengthMenu": [
+                    [10, 15, 20, -1],
+                    [10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "bFilter": false,
+                "iDisplayLength": 10,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": oLanguage,
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [0,10]
+                }
+                ]
+            });
+
+            //resource class table
+            $('#resource-class-table').dataTable({
+                "aoColumns": [
+                    null,
+                    { "bSortable": false }
+                ],
+                "aLengthMenu": [
+                    [10, 15, 20, -1],
+                    [10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "bFilter": false,
+                "iDisplayLength": 10,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": oLanguage,
+            });
+
+            //homework table
+            $('#homework-table').dataTable({
+                "aoColumns": [
+                    { "bSortable": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "bSortable": false }
+                ],
+                "aaSorting": [[ 5, "desc" ]],
+                "aLengthMenu": [
+                    [10, 15, 20, -1],
+                    [10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "bFilter": false,
+                "iDisplayLength": 10,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": oLanguage,
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [0,8]
                 }
                 ]
             });

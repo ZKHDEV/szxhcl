@@ -129,8 +129,8 @@ public class ArticleServiceImpl implements ArticleService {
         return articleVo;
     }
     @Override
-    public ArticleVo getFirstArticle(){
-        Article article = articleDao.findFirstByIdIsNotNullOrderBySortDtDesc();
+    public ArticleVo getFirstArticleByClassId(String classId){
+        Article article = articleDao.findFirstByArticleClass_IdOrderBySortDtDesc(classId);
 
         ArticleVo articleVo = null;
         if(article != null){
@@ -188,8 +188,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleClassVo> getAllArticleClassList() {
-        List<ArticleClass> articleClassList = articleClassDao.findAll();
-
+        List<ArticleClass> articleClassList = articleClassDao.findAllByIdIsNotNullOrderBySortDtDesc();
+            List<ArticleClassVo> articleClassVos = parseArticleClassList(articleClassList);
         return parseArticleClassList(articleClassList);
     }
 

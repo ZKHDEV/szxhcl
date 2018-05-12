@@ -1,35 +1,25 @@
 package cn.edu.gdou.szxhcl.controller.admin;
 
-import cn.edu.gdou.szxhcl.controller.BaseController;
+import cn.edu.gdou.szxhcl.controller.UploadController;
 import cn.edu.gdou.szxhcl.exception.FileHandlerException;
-import cn.edu.gdou.szxhcl.model.Slideshow;
 import cn.edu.gdou.szxhcl.model.vo.slideshow.SlideshowVo;
 import cn.edu.gdou.szxhcl.service.SlideshowService;
-import cn.edu.gdou.szxhcl.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("admin/slideshow")
-public class AdminSlideshowController extends BaseController {
-
-
-    private final static String[] ALLOW_IMG_TYPES = { "JPG","JPEG","PNG","GIF","BMP" };
+@Secured("ROLE_ADMIN")
+public class AdminSlideshowController extends UploadController {
 
     @Autowired
     private SlideshowService slideshowService;
@@ -42,7 +32,7 @@ public class AdminSlideshowController extends BaseController {
     }
 
     @PostMapping("upload")
-    public String upload(ModelMap model, HttpServletRequest request, @RequestParam(value="file",required=true) MultipartFile file) throws IOException {
+    public String upload(ModelMap model, @RequestParam(value="file",required=true) MultipartFile file) throws IOException {
 
         try {
             String imgUrl = uploadImg(file);

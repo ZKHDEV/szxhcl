@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:include="~{/admin/_layout/common-head::common-head('作业管理',~{::link})}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/select2_metro.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/DT_bootstrap.css}" />
+</head>
+<body class="page-header-fixed">
+<div th:replace="~{/admin/_layout/header::header}"></div>
+<div class="page-container row-fluid">
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('homework')}"></div>
+
+    <!-- BEGIN PAGE -->
+
+    <div class="page-content">
+
+        <!-- BEGIN PAGE CONTAINER-->
+
+        <div class="container-fluid">
+
+            <!-- BEGIN PAGE HEADER-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+                    <h3 class="page-title">
+
+                    </h3>
+
+                    <ul class="breadcrumb">
+
+                        <li>
+
+                            <i class="icon-home"></i>
+
+                            <a th:href="@{/admin/}">管理首页</a>
+
+                            <i class="icon-angle-right"></i>
+
+                        </li>
+
+                        <li>
+
+                            <a th:href="@{/admin/homework/list}">作业管理</a>
+
+                            <i class="icon-angle-right"></i>
+
+                        </li>
+
+                        <li><a href="#">作业提交管理</a></li>
+
+                    </ul>
+
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN PAGE CONTENT-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+                    <div class="portlet box grey">
+
+                        <div class="portlet-title">
+
+                            <div class="caption"><i class="icon-reorder"></i>作业提交管理</div>
+
+                        </div>
+
+                        <div class="portlet-body">
+
+                            <div class="clearfix">
+                                <div class="row-fluid">
+
+                                    <div class="span10">
+
+                                    </div>
+
+                                    <div class="span2">
+
+                                        <div class="btn-group pull-right">
+
+                                            <button class="btn green dropdown-toggle" data-toggle="dropdown">批量操作 <i class="icon-angle-down"></i>
+
+                                            </button>
+
+                                            <ul class="dropdown-menu pull-right">
+
+                                                <li><a class="del-batch" href="javascript:;" th:tarUrl="@{'/admin/homework/delete_submit_batch/' + ${hwId}}">删除所选</a></li>
+
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <table class="table table-striped table-bordered table-hover model-list-table" id="homework-submit-table">
+
+                                <thead>
+
+                                <tr>
+
+                                    <th style="width:8px;"><input type="checkbox" class="group-checkable" data-set="#homework-submit-table .checkboxes" /></th>
+
+                                    <th>标题</th>
+
+                                    <th>学院</th>
+
+                                    <th>班级</th>
+
+                                    <th>学号</th>
+
+                                    <th>姓名</th>
+
+                                    <th>提交时间</th>
+
+                                    <th>分数</th>
+
+                                    <th>下载</th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                <tr class="odd gradeX" th:each="homework : ${list}">
+
+                                    <td><input type="checkbox" class="checkboxes" th:value="${homework.id}" /></td>
+
+                                    <td th:text="${homework.homeworkTitle}"></td>
+
+                                    <td th:text="${homework.user.college}"></td>
+
+                                    <td th:text="${homework.user.classes}"></td>
+
+                                    <td th:text="${homework.user.username}"></td>
+
+                                    <td th:text="${homework.user.name}"></td>
+
+                                    <td th:text="${homework.createDt}"></td>
+
+                                    <td th:text="${homework.score}"></td>
+
+                                    <td><a th:href="@{${homework.url}}" target="_blank">下载</a></td>
+
+                                    <td>
+
+                                        <a id="score-btn" href="javascript:;" th:tarUrl="@{'/admin/homework/sore/' + ${hwId} + '/' + ${homework.id}}">评分</a>
+
+                                        <a class="delete" th:href="@{'/admin/homework/delete_submit/' + ${hwId} + '/' + ${homework.id}}" onclick="return confirm('确定要删除吗？')">删除</a>
+
+                                    </td>
+
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <!-- END EXAMPLE TABLE PORTLET-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE CONTENT-->
+
+        </div>
+
+        <!-- END PAGE CONTAINER-->
+
+    </div>
+
+    <!-- END PAGE -->
+
+</div>
+<div th:replace="~{/admin/_layout/footer::footer}"></div>
+<th:block th:replace="~{/admin/_layout/common-js::common-js(~{::script})}">
+    <script type="text/javascript" th:src="@{/static/js/select2.min.js}"></script>
+
+    <script type="text/javascript" th:src="@{/static/js/jquery.dataTables.js}"></script>
+
+    <script type="text/javascript" th:src="@{/static/js/DT_bootstrap.js}"></script>
+
+    <script th:src="@{/static/js/app.js}"></script>
+
+    <script th:src="@{/static/js/custom-table-managed.js}"></script>
+
+    <script>
+
+        jQuery(document).ready(function() {
+
+            App.init();
+
+            TableManaged.init();
+
+            $("#score-btn").click(function(){
+                var url = $(this).attr("tarUrl");
+                var score = prompt("请输入0~100之间的分数：", "分数");
+                if(!/^(\\d|[1-9]\\d|100)$/.test(score)){
+                    alert("分数输入有误！");
+                    return;
+                }
+
+                url = url + "?score=" + score;
+
+                $.get(url, function (data) {
+                    alert("评分完成！");
+                    window.location.href = data;
+                });
+            });
+
+        });
+
+    </script>
+</th:block>
+</body>
+</html>

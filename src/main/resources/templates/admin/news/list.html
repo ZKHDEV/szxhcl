@@ -39,7 +39,7 @@
 
                             <i class="icon-home"></i>
 
-                            <a th:href="@{/admin}">管理首页</a>
+                            <a th:href="@{/admin/}">管理首页</a>
 
                             <i class="icon-angle-right"></i>
 
@@ -147,6 +147,8 @@
 
                                     <th>更新时间</th>
 
+                                    <th>排序时间</th>
+
                                     <th>操作</th>
 
                                 </tr>
@@ -166,6 +168,8 @@
                                     <td th:text="${news.author}"></td>
 
                                     <td th:text="${news.updateDt}"></td>
+
+                                    <td th:text="${news.sortDt}"></td>
 
                                     <td>
 

@@ -4,16 +4,97 @@
 <!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 
 <!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
-<head th:replace="~{/admin/_layout/common-head::common-head}">
-    <meta charset="UTF-8">
-    <title>主页</title>
+<head th:include="~{/admin/_layout/common-head::common-head('管理首页',~{::link})}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/select2_metro.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/DT_bootstrap.css}" />
 </head>
 <body class="page-header-fixed">
-    <div th:replace="~{/admin/_layout/header::header}"></div>
-    <div class="page-container row-fluid">
-        <div th:replace="~{/admin/_layout/sidebar::sidebar}"></div>
+<div th:replace="~{/admin/_layout/header::header}"></div>
+<div class="page-container row-fluid">
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('index')}"></div>
+
+    <!-- BEGIN PAGE -->
+
+    <div class="page-content">
+
+        <!-- BEGIN PAGE CONTAINER-->
+
+        <div class="container-fluid">
+
+            <!-- BEGIN PAGE HEADER-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+                    <h3 class="page-title">
+
+                    </h3>
+
+                    <ul class="breadcrumb">
+
+                        <li>
+
+                            <i class="icon-home"></i>
+
+                            <a th:href="@{/admin/}">管理首页</a>
+
+                        </li>
+
+                    </ul>
+
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN PAGE CONTENT-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <h1>欢迎访问 数字信号处理精品课程 - 后台管理系统</h1>
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE CONTENT-->
+
+        </div>
+
+        <!-- END PAGE CONTAINER-->
 
     </div>
-    <div th:replace="~{/admin/_layout/common-js::common-js}"></div>
+
+    <!-- END PAGE -->
+
+</div>
+<div th:replace="~{/admin/_layout/footer::footer}"></div>
+<th:block th:replace="~{/admin/_layout/common-js::common-js(~{::script})}">
+    <script type="text/javascript" th:src="@{/static/js/select2.min.js}"></script>
+
+    <script type="text/javascript" th:src="@{/static/js/jquery.dataTables.js}"></script>
+
+    <script type="text/javascript" th:src="@{/static/js/DT_bootstrap.js}"></script>
+
+    <script th:src="@{/static/js/app.js}"></script>
+
+    <script>
+
+        jQuery(document).ready(function() {
+
+            App.init();
+
+        });
+
+    </script>
+</th:block>
 </body>
 </html>

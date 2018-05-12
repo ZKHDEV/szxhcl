@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -18,17 +19,23 @@ public class User {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private Boolean expired;
-    @Column(nullable = false)
-    private Boolean locked;
-    @Column(nullable = false)
-    private Boolean valid;
-    @Column(nullable = false)
-    private String pName;
+    private String name;
+    private String college;
+    private String classes;
     @Column(nullable = false)
     private Date createDt;
     @Column(nullable = false)
     private Date updateDt;
+    @Column(nullable = false)
+    private String role;
+    private String email;
+    private String phone;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<Homework> homeworkList;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<HomeworkSubmit> homeworkSubmitList;
 
     public String getId() {
         return id;
@@ -54,38 +61,6 @@ public class User {
         this.password = password;
     }
 
-    public Boolean getExpired() {
-        return expired;
-    }
-
-    public void setExpired(Boolean expired) {
-        this.expired = expired;
-    }
-
-    public Boolean getLocked() {
-        return locked;
-    }
-
-    public void setLocked(Boolean locked) {
-        this.locked = locked;
-    }
-
-    public Boolean getValid() {
-        return valid;
-    }
-
-    public void setValid(Boolean valid) {
-        this.valid = valid;
-    }
-
-    public String getpName() {
-        return pName;
-    }
-
-    public void setpName(String pName) {
-        this.pName = pName;
-    }
-
     public Date getCreateDt() {
         return createDt;
     }
@@ -100,5 +75,69 @@ public class User {
 
     public void setUpdateDt(Date updateDt) {
         this.updateDt = updateDt;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getClasses() {
+        return classes;
+    }
+
+    public void setClasses(String classes) {
+        this.classes = classes;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Homework> getHomeworkList() {
+        return homeworkList;
+    }
+
+    public void setHomeworkList(List<Homework> homeworkList) {
+        this.homeworkList = homeworkList;
+    }
+
+    public List<HomeworkSubmit> getHomeworkSubmitList() {
+        return homeworkSubmitList;
+    }
+
+    public void setHomeworkSubmitList(List<HomeworkSubmit> homeworkSubmitList) {
+        this.homeworkSubmitList = homeworkSubmitList;
     }
 }

@@ -39,7 +39,7 @@
 
                             <i class="icon-home"></i>
 
-                            <a th:href="@{/admin}">管理首页</a>
+                            <a th:href="@{/admin/}">管理首页</a>
 
                             <i class="icon-angle-right"></i>
 
@@ -126,6 +126,8 @@
                                         <a class="edit" th:href="@{'/admin/article/class/edit/'+${articleClass.id}}">修改</a>
 
                                         <a class="delete" th:href="@{'/admin/article/class/delete/'+${articleClass.id}}" onclick="return confirm('确定要删除吗？(注意：栏目下的文章也将被全部删除！！！)')">删除</a>
+
+                                        <a th:href="@{'/admin/article/class/sort/'+${articleClass.id}}">排序</a>
 
                                     </td>
 

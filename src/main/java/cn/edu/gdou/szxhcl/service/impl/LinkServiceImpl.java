@@ -26,7 +26,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public List<LinkVo> getLinkList() {
-        List<Link> linkList = linkDao.findAll();
+        List<Link> linkList = linkDao.findAllByIdIsNotNullOrderByTitle();
         List<LinkVo> linkVoList = null;
         if(linkList != null && linkList.size() > 0){
             linkVoList = new ArrayList<>();

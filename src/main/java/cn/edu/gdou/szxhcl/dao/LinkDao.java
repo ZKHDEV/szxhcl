@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface LinkDao extends CrudRepository<Link,String> {
-    List<Link> findAll();
+    List<Link> findAllByIdIsNotNullOrderByTitle();
     Link findFirstById(String id);
 }

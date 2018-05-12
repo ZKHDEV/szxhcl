@@ -10,10 +10,10 @@
                 <a th:href="@{/}">首页</a>
             </li>
             <li class="nav-item" th:each="cls : ${classList}">
-                <a th:href="@{/article}" th:text="${cls.className}"></a>
+                <a th:href="@{'/article/class/' + ${cls.id}}" th:text="${cls.className}"></a>
                 <ul class="child-nav">
                     <li th:each="item : ${cls.articleList}">
-                        <a th:href="@{'/article/' + ${item.id}}" th:text="${item.title}"></a>
+                        <a th:href="@{'/article/' + ${item.id}}" th:title="${item.title}" th:text="${item.title}"></a>
                     </li>
                 </ul>
             </li>

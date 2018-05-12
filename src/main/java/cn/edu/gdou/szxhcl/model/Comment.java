@@ -25,6 +25,11 @@ public class Comment {
     private Boolean top;
     @Column(nullable = false)
     private Date createDt;
+    @ManyToOne
+    @JoinColumn(name="par_comm_id")
+    private Comment parComment;
+    @OneToMany(cascade={CascadeType.REMOVE},mappedBy = "parComment",fetch = FetchType.LAZY)
+    private List<Comment> commentList;
 
     public String getId() {
         return id;
@@ -80,5 +85,21 @@ public class Comment {
 
     public void setCreateDt(Date createDt) {
         this.createDt = createDt;
+    }
+
+    public Comment getParComment() {
+        return parComment;
+    }
+
+    public void setParComment(Comment parComment) {
+        this.parComment = parComment;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 }

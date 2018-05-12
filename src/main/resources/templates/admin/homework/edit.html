@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+
+<!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:include="~{/admin/_layout/common-head::common-head(${#strings.isEmpty(model.id) ? '添加作业' : '修改作业'},~{::link})}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/select2_metro.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/datetimepicker.css}">
+</head>
+<body class="page-header-fixed">
+<div th:replace="~{/admin/_layout/header::header}"></div>
+<div class="page-container row-fluid">
+    <div th:replace="~{/admin/_layout/sidebar::sidebar('homework')}"></div>
+
+    <!-- BEGIN PAGE -->
+
+    <div class="page-content">
+
+        <!-- BEGIN PAGE CONTAINER-->
+
+        <div class="container-fluid">
+
+            <!-- BEGIN PAGE HEADER-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+                    <h3 class="page-title">
+
+                    </h3>
+
+                    <ul class="breadcrumb">
+
+                        <li>
+
+                            <i class="icon-home"></i>
+
+                            <a th:href="@{/admin/}">管理首页</a>
+
+                            <i class="icon-angle-right"></i>
+
+                        </li>
+
+                        <li>
+
+                            <a th:href="@{/admin/homework/list}">作业管理</a>
+
+                            <i class="icon-angle-right"></i>
+
+                        </li>
+
+                        <li>
+
+                            <a href="#" th:if="${#strings.isEmpty(model.id)}">添加作业</a>
+
+                            <a href="#" th:unless="${#strings.isEmpty(model.id)}">修改作业</a>
+
+                        </li>
+
+                    </ul>
+
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE HEADER-->
+
+            <!-- BEGIN PAGE CONTENT-->
+
+            <div class="row-fluid">
+
+                <div class="span12">
+
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+                    <div th:class="${#strings.isEmpty(model.id) ? 'portlet box green' : 'portlet box blue'}">
+
+                        <div class="portlet-title">
+
+                            <div class="caption" th:if="${#strings.isEmpty(model.id)}"><i class="icon-reorder"></i>添加作业</div>
+
+                            <div class="caption" th:unless="${#strings.isEmpty(model.id)}"><i class="icon-reorder"></i>修改作业</div>
+
+                        </div>
+
+                        <div class="portlet-body form">
+
+                            <!-- BEGIN FORM-->
+
+                            <form th:action="@{/admin/homework/edit}" th:object="${model}" th:method="post" class="form-horizontal form-bordered form-row-stripped">
+
+                                <input type="hidden" name="id" th:field="*{id}">
+
+                                <div th:class="${(errors != null && errors['title'] != null) ? 'control-group error' : 'control-group'}">
+
+                                    <label class="control-label">标题<span class="required">*</span></label>
+
+                                    <div class="controls">
+
+                                        <input name="title" type="text" class="m-wrap span12" th:field="*{title}">
+
+                                        <span class="help-block" th:if="${errors != null && errors['title'] != null}" th:text="${errors['title']}"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div th:class="${(errors != null && errors['endDt'] != null) ? 'control-group error' : 'control-group'}">
+
+                                    <label class="control-label">截至时间<span class="required">*</span></label>
+
+                                    <div class="controls">
+
+                                        <div class="input-append date form_datetime">
+
+                                            <input size="16" name="endDt" type="text" value="" readonly="" class="m-wrap" th:field="*{endDt}">
+
+                                            <span class="add-on"><i class="icon-calendar"></i></span>
+
+                                            <span class="help-block" th:if="${errors != null && errors['endDt'] != null}" th:text="${errors['endDt']}"></span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div th:class="${(errors != null && errors['content'] != null) ? 'control-group error' : 'control-group'}">
+
+                                    <label class="control-label">作业内容<span class="required">*</span></label>
+
+                                    <div class="controls">
+
+                                        <textarea name="content" id="content-textarea" th:field="*{content}"></textarea>
+
+                                        <span class="help-block" th:if="${errors != null && errors['content'] != null}" th:text="${errors['content']}"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-actions">
+
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+
+                                    <button type="button" class="btn" onclick="history.go(-1)">取消</button>
+
+                                </div>
+
+                            </form>
+
+                            <!-- END FORM-->
+
+                        </div>
+
+                    </div>
+
+                    <!-- END EXAMPLE TABLE PORTLET-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE CONTENT-->
+
+        </div>
+
+        <!-- END PAGE CONTAINER-->
+
+    </div>
+
+    <!-- END PAGE -->
+
+</div>
+<div th:replace="~{/admin/_layout/footer::footer}"></div>
+<th:block th:replace="~{/admin/_layout/common-js::common-js(~{::script})}">
+    <script type="text/javascript" th:src="@{/static/js/select2.min.js}"></script>
+
+    <script type="text/javascript" th:src="@{/static/js/bootstrap-datetimepicker.js}"></script>
+
+    <script th:src="@{/static/js/app.js}"></script>
+
+    <script th:src="@{/static/xheditor/xheditor-1.1.14-zh-cn.min.js}"></script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var upImgUrl = /*[[@{/admin/upload/image}]]*/ '';
+        var upLinkUrl = /*[[@{/admin/upload/file}]]*/ '';
+        /*]]>*/
+    </script>
+
+    <script>
+
+        jQuery(document).ready(function() {
+
+            App.init();
+
+            $(".form_datetime").datetimepicker({
+                format: "yyyy-mm-dd hh:mm:ss",
+                pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+            });
+
+            $('#content-textarea').xheditor({
+                tools:'full',
+                skin:'default',
+                width:'100%',
+                height:400,
+                html5Upload : false,
+                upImgUrl:upImgUrl,
+                upLinkUrl:upLinkUrl,
+                upImgExt:"jpg,jpeg,gif,bmp,png",
+                upLinkExt:"zip,rar,txt,ppt,pptx,doc,docx,pps,xlsx,xls,csv,pdf"
+            });
+
+
+
+        });
+
+    </script>
+</th:block>
+</body>
+</html>

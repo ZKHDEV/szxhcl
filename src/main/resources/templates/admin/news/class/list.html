@@ -39,7 +39,7 @@
 
                             <i class="icon-home"></i>
 
-                            <a th:href="@{/admin}">管理首页</a>
+                            <a th:href="@{/admin/}">管理首页</a>
 
                             <i class="icon-angle-right"></i>
 
@@ -105,6 +105,8 @@
 
                                     <th>栏目名称</th>
 
+                                    <th>排序时间</th>
+
                                     <th>操作</th>
 
                                 </tr>
@@ -117,13 +119,15 @@
 
                                     <td th:text="${newsClass.className}"></td>
 
+                                    <td th:text="${newsClass.sortDt}"></td>
+
                                     <td>
 
                                         <a class="edit" th:href="@{'/admin/news/class/edit/'+${newsClass.id}}">修改</a>
 
                                         <a class="delete" th:href="@{'/admin/news/class/delete/'+${newsClass.id}}" onclick="return confirm('确定要删除吗？(注意：栏目下的新闻也将被全部删除！！！)')">删除</a>
 
-                                        <a th:href="@{'/admin/news/class/sort/'+${article.id}}">排序</a>
+                                        <a th:href="@{'/admin/news/class/sort/'+${newsClass.id}}">排序</a>
 
                                     </td>
 

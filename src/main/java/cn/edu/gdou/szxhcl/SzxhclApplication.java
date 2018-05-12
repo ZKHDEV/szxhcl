@@ -10,7 +10,6 @@ import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
 @PropertySource("classpath:jdbc.properties")
-//@PropertySource("classpath:thymeleaf.properties")
 public class SzxhclApplication {
 
 	public static void main(String[] args) {
