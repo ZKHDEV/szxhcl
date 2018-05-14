@@ -18,6 +18,7 @@ public class HomeworkVo {
     private Integer submitNum;
     private UserVo user;
     private List<HomeworkSubmitVo> homeworkSubmitList;
+    private HomeworkSubmitVo homeworkSubmit;
 
     public String getId() {
         return id;
@@ -97,5 +98,13 @@ public class HomeworkVo {
 
     public void setHomeworkSubmitList(List<HomeworkSubmitVo> homeworkSubmitList) {
         this.homeworkSubmitList = homeworkSubmitList;
+    }
+
+    public HomeworkSubmitVo getHomeworkSubmit() {
+        return homeworkSubmit;
+    }
+
+    public void setHomeworkSubmit(HomeworkSubmitVo homeworkSubmit) {
+        this.homeworkSubmit = homeworkSubmit;
     }
 }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{/home/_layout/common-head::common-noarg-head}">
+</head>
+<body>
+<div th:replace="~{/home/_layout/header::header}"></div>
+<div class="container">
+    <div class="page-content-top">
+        <div class="section-bg"></div>
+        <h1>资源平台</h1>
+    </div>
+    <div class="page-content">
+        <div class="left-page-content">
+            <div class="nav-section">
+                <div class="section-bg"></div>
+                <ul>
+                    <li>
+                        <a th:href="@{/resource}">全部</a>
+                    </li>
+                    <li th:each="item : ${resClassList}">
+                        <a th:href="@{'/resource' + '?classId=' + ${item.id}}" th:text="${item.className}" th:title="${item.className}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-page-content">
+            <div class="bread-nav">
+                <ul>
+                    <li>
+                        <a th:href="@{/index}">首页</a>&nbsp;>&nbsp;
+                    </li>
+                    <li>
+                        <a th:href="@{/resource}">资源平台</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-section">
+                <table class="table-list">
+                    <thead>
+                    <tr>
+                        <th>标题</th>
+                        <th>类别</th>
+                        <th>类型</th>
+                        <th>大小</th>
+                        <th>日期</th>
+                        <th>下载</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${resList}">
+                        <td>
+                            <a th:unless="${item.type == '其它'}" th:href="@{'/resource/preview/' + ${item.id}}" th:title="${item.fileName}" th:text="${item.fileName}"></a>
+                            <a th:if="${item.type == '其它'}" th:href="@{${item.url}}" target="_blank" th:title="${item.fileName}" th:text="${item.fileName}"></a>
+                        </td>
+                        <td th:text="${item.className}"></td>
+                        <td th:text="${item.type}"></td>
+                        <td th:text="${item.size}"></td>
+                        <td th:text="${#strings.substring(item.uploadDt,0,10)}"></td>
+                        <td><a th:href="@{${item.url}}" target="_blank">下载</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-section">
+                <div class="section-head">
+                    <h1>搜索资源</h1>
+                </div>
+                <div class="section-content">
+                    <form class="section-form" th:action="@{/resource}" th:method="get" th:object="${model}">
+                        <div class="form-group">
+                            <label for="fileName" class="control-label">标题</label>
+                            <input type="text" class="form-control" id="fileName" name="fileName" placeholder="标题" th:field="*{fileName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="classId" class="control-label">资源类别</label>
+                            <select class="form-control" id="classId" name="classId" th:field="*{classId}">
+                                <option value="">全部类别</option>
+                                <option th:each="item : ${resClassList}" th:value="${item.id}" th:text="${item.className}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type" class="control-label">类型</label>
+                            <select class="form-control" id="type" name="type" th:field="*{type}">
+                                <option value="">不限类型</option>
+                                <option value="PPT">PPT</option>
+                                <option value="Word">Word</option>
+                                <option value="Excel">Excel</option>
+                                <option value="PDF">PDF</option>
+                                <option value="纯文本">纯文本</option>
+                                <option value="视频">视频</option>
+                                <option value="音频">音频</option>
+                                <option value="图片">图片</option>
+                                <option value="其它">其它</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-btn-group">
+                                <button type="submit">查询</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div th:replace="~{/home/_layout/footer::footer}"></div>
+<th:block th:include="~{/home/_layout/common-js::common-noarg-js}">
+</th:block>
+</body>
+</html>

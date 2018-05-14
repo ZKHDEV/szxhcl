@@ -9,6 +9,7 @@ public class HomeworkSubmitVo {
     private String createDt;
     private String homeworkId;
     private String homeworkTitle;
+    private Boolean timeout;
     private UserVo user;
 
     public String getId() {
@@ -57,6 +58,14 @@ public class HomeworkSubmitVo {
 
     public void setHomeworkTitle(String homeworkTitle) {
         this.homeworkTitle = homeworkTitle;
+    }
+
+    public Boolean getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(Boolean timeout) {
+        this.timeout = timeout;
     }
 
     public UserVo getUser() {

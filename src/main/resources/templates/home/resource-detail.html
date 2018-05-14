@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{/home/_layout/common-head::common-head(~{::link})}">
+    <!--<link rel="stylesheet" th:href="@{/static/css/video-js.css}">-->
+    <link href="http://vjs.zencdn.net/6.9.0/video-js.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{/home/_layout/header::header}"></div>
+<div class="container">
+    <div class="page-content-top">
+        <div class="section-bg"></div>
+        <h1>资源平台</h1>
+    </div>
+    <div class="page-content">
+        <div class="left-page-content">
+            <div class="nav-section">
+                <div class="section-bg"></div>
+                <ul>
+                    <li>
+                        <a th:href="@{/resource}">全部</a>
+                    </li>
+                    <li th:each="item : ${resClassList}">
+                        <a th:href="@{'/resource' + '?classId=' + ${item.id}}" th:text="${item.className}" th:title="${item.className}"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="link-section">
+                <div class="section-head">
+                    <h1 th:text="${model.className}"></h1>
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li th:each="item,itemStat : ${resList}" th:if="${itemStat.index < 15}">
+                            <a th:href="@{'/resource/preview/' + ${item.id}}" th:text="${item.fileName}" th:title="${item.fileName}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="right-page-content">
+            <div class="bread-nav">
+                <ul>
+                    <li>
+                        <a th:href="@{/index}">首页</a>&nbsp;>&nbsp;
+                    </li>
+                    <li>
+                        <a th:href="@{/resource}">资源平台</a>&nbsp;>&nbsp;
+                    </li>
+                    <li>
+                        <a th:href="@{'/resource/' + ${model.id}}" th:text="${model.fileName}"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-section">
+                <div class="section-head">
+                    <h1 th:text="${model.fileName}"></h1>
+                </div>
+
+                <div class="section-content">
+                    <video th:if="${model.type == '视频' || model.type == '音频'}" id="my-video" class="video-js" controls preload="auto" width="660" height="400" data-setup="{}">
+                        <source th:src="@{${model.url}}">
+                        <p class="vjs-no-js">
+                            你的浏览器不支持播放此视频！
+                        </p>
+                    </video>
+
+                    <img th:if="${model.type == '图片'}" th:src="@{${model.url}}" alt="" style="width: 100%;">
+
+                    <iframe th:if="${model.type == 'PPT'}" th:src="'https://view.officeapps.live.com/op/embed.aspx?src=' + @{${model.url}}" width="100%" height="500px" frameborder="0"></iframe>
+
+                    <iframe th:if="${model.type == 'Word' || model.type == 'Excel'}" th:src="'https://view.officeapps.live.com/op/embed.aspx?src=' + @{${model.url}}" width="100%" height="860px" frameborder="0"></iframe>
+
+                    <iframe th:if="${model.type == '纯文本'}" th:src="@{${model.url}}" width="100%" height="500px" frameborder="0"></iframe>
+
+                    <iframe width="100%" height="800px" frameborder="0" th:if="${model.type == 'PDF'}" th:src="@{${model.url}}" ></iframe>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div th:replace="~{/home/_layout/footer::footer}"></div>
+<th:block th:include="~{/home/_layout/common-js::common-js(~{::script})}">
+    <!--<script th:src="@{/static/js/videojs-ie8.min.js}"></script>-->
+    <!--<script th:src="@{/static/js/video.js}"></script>-->
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <script src="http://vjs.zencdn.net/6.9.0/Video.js"></script>
+</th:block>
+</body>
+</html>

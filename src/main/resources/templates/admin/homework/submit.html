@@ -165,7 +165,7 @@
 
                                     <td>
 
-                                        <a id="score-btn" href="javascript:;" th:tarUrl="@{'/admin/homework/sore/' + ${hwId} + '/' + ${homework.id}}">评分</a>
+                                        <a th:if="${homework.timeout == true}" id="score-btn" href="javascript:;" th:tarUrl="@{'/admin/homework/sore/' + ${hwId} + '/' + ${homework.id}}">评分</a>
 
                                         <a class="delete" th:href="@{'/admin/homework/delete_submit/' + ${hwId} + '/' + ${homework.id}}" onclick="return confirm('确定要删除吗？')">删除</a>
 
@@ -220,8 +220,8 @@
 
             $("#score-btn").click(function(){
                 var url = $(this).attr("tarUrl");
-                var score = prompt("请输入0~100之间的分数：", "分数");
-                if(!/^(\\d|[1-9]\\d|100)$/.test(score)){
+                var score = prompt("请输入0~100之间的分数：", "");
+                if(!/^(\d|[1-9]\d|100)$/.test(score)){
                     alert("分数输入有误！");
                     return;
                 }

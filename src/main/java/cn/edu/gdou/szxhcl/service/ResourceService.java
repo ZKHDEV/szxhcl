@@ -11,6 +11,7 @@ public interface ResourceService {
     ResourceVo getResource(String id);
     ResourceVo saveResource(ResourceVo resourceVo);
     void deleteResource(String... ids);
+    void addDownNum(String id);
 
     List<ResClassVo> getResClassList();
     ResClassVo getResClass(String id);

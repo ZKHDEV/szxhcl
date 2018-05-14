@@ -15,4 +15,7 @@ public interface HomeworkService {
     List<HomeworkSubmitVo> getSubmitList(String id);
     void deleteHomeworkSubmit(String... ids);
     void score(String submitId, Integer score);
+    HomeworkSubmitVo saveHomeworkSubmit(HomeworkSubmitVo homeworkSubmitVo, String hwId, String userId);
+    List<HomeworkVo> getHwListWithSubmitByUser(String userId);
+    List<HomeworkVo> getHwListExceptSubmitByUser(String userId);
 }

@@ -18,10 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +53,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         homeworkSubmitVo.setCreateDt(DateTimeUtil.dateToString(DateTimeUtil.YMDHMS, homeworkSubmit.getCreateDt()));
         homeworkSubmitVo.setHomeworkId(homeworkSubmit.getHomework().getId());
         homeworkSubmitVo.setHomeworkTitle(homeworkSubmit.getHomework().getTitle());
+        homeworkSubmitVo.setTimeout(homeworkSubmit.getHomework().getEndDt().getTime() < System.currentTimeMillis());
         homeworkSubmitVo.setUser(parseUser(homeworkSubmit.getUser()));
         return homeworkSubmitVo;
     }
@@ -78,7 +76,6 @@ public class HomeworkServiceImpl implements HomeworkService {
         List<HomeworkSubmit> homeworkSubmitList = homework.getHomeworkSubmitList();
         if(homeworkSubmitList != null && homeworkSubmitList.size() > 0) {
             homeworkVo.setSubmitNum(homeworkSubmitList.size());
-
             if(withSubmit) {
                 List<HomeworkSubmitVo> homeworkSubmitVoList = null;
                 homeworkSubmitVoList = new ArrayList<>();
@@ -225,6 +222,59 @@ public class HomeworkServiceImpl implements HomeworkService {
         HomeworkSubmit homeworkSubmit = homeworkSubmitDao.findFirstById(submitId);
         homeworkSubmit.setScore(score);
         homeworkSubmitDao.save(homeworkSubmit);
+    }
+
+    @Override
+    public List<HomeworkVo> getHwListWithSubmitByUser(String userId) {
+        List<HomeworkVo> homeworkVoList = null;
+
+        List<Homework> homeworkList = homeworkDao.findAllBySubmitUserId(userId);
+        if(homeworkList != null) {
+            homeworkVoList = parseHomeworkList(homeworkList,false,false);
+            for (HomeworkVo hv : homeworkVoList) {
+                hv.setHomeworkSubmit(parseHomeworkSubmit(homeworkSubmitDao.findFirstByHomework_IdAndUser_Id(hv.getId(),userId)));
+            }
+        }
+
+        return homeworkVoList;
+    }
+
+    @Override
+    public List<HomeworkVo> getHwListExceptSubmitByUser(String userId) {
+        List<HomeworkVo> homeworkVoList = null;
+
+        List<Homework> homeworkList = homeworkDao.findAllExceptSubmitUserId(userId);
+        if(homeworkList != null) {
+            homeworkVoList = parseHomeworkList(homeworkList,false,false);
+        }
+
+        return homeworkVoList;
+    }
+
+    @Override
+    public HomeworkSubmitVo saveHomeworkSubmit(HomeworkSubmitVo homeworkSubmitVo, String hwId, String userId) {
+        Homework homework = homeworkDao.findFirstById(hwId);
+        if(homework.getEndDt().getTime() < System.currentTimeMillis()) {
+            return null;
+        }
+
+        List<HomeworkSubmit> hisHwSubmitList = homeworkSubmitDao.findAllByHomework_IdAndUser_IdAndDelFlagIsFalse(hwId,userId);
+        for(HomeworkSubmit hws : hisHwSubmitList) {
+            homeworkSubmitDao.delete(hws);
+        }
+
+        HomeworkSubmit homeworkSubmit = new HomeworkSubmit();
+        homeworkSubmit.setDelFlag(false);
+        homeworkSubmit.setCreateDt(new Date());
+        homeworkSubmit.setUrl(homeworkSubmitVo.getUrl());
+
+        User user = userDao.findFirstById(userId);
+        homeworkSubmit.setUser(user);
+        homeworkSubmit.setHomework(homework);
+
+        homeworkSubmitDao.save(homeworkSubmit);
+
+        return parseHomeworkSubmit(homeworkSubmit);
     }
 
 }

@@ -95,6 +95,7 @@ public class AdminHomeworkController extends BaseController {
             , @PathVariable("id") String id
             , @RequestParam("score") Integer score){
 
+        homeworkService.score(id, score);
         return "/admin/homework/submit/" + hwId;
     }
 

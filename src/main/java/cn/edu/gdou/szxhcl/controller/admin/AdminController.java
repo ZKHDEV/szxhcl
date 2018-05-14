@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("admin")
 public class AdminController extends BaseController {
-    @RequestMapping("/")
+    @RequestMapping("")
     public String index(ModelMap model){
         return redirectTo("/admin/index");
     }

@@ -43,7 +43,7 @@ public class IndexController extends BaseController {
         return articleService.getAllArticleClassList();
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public String index(ModelMap model
             ,@ModelAttribute List<ArticleClassVo> articleClassVoList){
 
@@ -59,6 +59,11 @@ public class IndexController extends BaseController {
         model.put("linkList",linkVoList);
 
         return view("home/index");
+    }
+
+    @GetMapping("index")
+    public String index(){
+        return redirectTo("/");
     }
 
     @GetMapping("article/{id}")

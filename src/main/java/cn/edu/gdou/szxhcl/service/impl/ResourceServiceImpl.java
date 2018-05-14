@@ -173,6 +173,15 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    public void addDownNum(String id) {
+        Resource resource = resourceDao.findFirstById(id);
+        if(resource != null) {
+            resource.setDownNum(resource.getDownNum() + 1);
+            resourceDao.save(resource);
+        }
+    }
+
+    @Override
     public List<ResClassVo> getResClassList() {
         List<ResourceClass> resClassList = resourceClassDao.findAll();
         return parseResClassList(resClassList);
