@@ -17,10 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -100,7 +97,6 @@ public class ResourceServiceImpl implements ResourceService {
     
     @Override
     public List<ResourceVo> getResourceList(ResQueryVo queryVo) {
-        List<User> userList1 = userDao.findAll();
         List<Resource> resourceList = resourceDao.findAll(new Specification<Resource>(){
             @Override
             public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -116,7 +112,9 @@ public class ResourceServiceImpl implements ResourceService {
                 predicates.add(criteriaBuilder.like(root.get("fileName"), StringUtil.surround(queryVo.getFileName(), "%")));
                 predicates.add(criteriaBuilder.like(root.get("uploader"), StringUtil.surround(queryVo.getUploader(), "%")));
 
-                criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()])));
+                Order order = criteriaBuilder.desc(root.get("uploadDt"));
+
+                criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]))).orderBy(order);
                 return null;
             }
         });

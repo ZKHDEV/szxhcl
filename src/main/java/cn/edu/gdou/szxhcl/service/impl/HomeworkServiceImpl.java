@@ -173,7 +173,6 @@ public class HomeworkServiceImpl implements HomeworkService {
             homework.setCreateDt(new Date());
             homework.setDelFlag(false);
 
-
             User user = userDao.findFirstById(userId);
             homework.setUser(user);
         }
@@ -181,7 +180,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         homework.setTitle(homeworkVo.getTitle());
         homework.setContent(homeworkVo.getContent());
         homework.setUpdateDt(new Date());
-        homework.setEndDt(DateTimeUtil.stringToDate(DateTimeUtil.YMDHMS, homeworkVo.getEndDt()));
+        homework.setEndDt(DateTimeUtil.stringToDate(DateTimeUtil.YMDHMS, homeworkVo.getEndDt() + ":00"));
 
         homeworkDao.save(homework);
 
@@ -229,7 +228,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         List<HomeworkVo> homeworkVoList = null;
 
         List<Homework> homeworkList = homeworkDao.findAllBySubmitUserId(userId);
-        if(homeworkList != null) {
+        if(homeworkList != null && homeworkList.size() > 0) {
             homeworkVoList = parseHomeworkList(homeworkList,false,false);
             for (HomeworkVo hv : homeworkVoList) {
                 hv.setHomeworkSubmit(parseHomeworkSubmit(homeworkSubmitDao.findFirstByHomework_IdAndUser_Id(hv.getId(),userId)));
@@ -244,7 +243,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         List<HomeworkVo> homeworkVoList = null;
 
         List<Homework> homeworkList = homeworkDao.findAllExceptSubmitUserId(userId);
-        if(homeworkList != null) {
+        if(homeworkList != null && homeworkList.size() > 0) {
             homeworkVoList = parseHomeworkList(homeworkList,false,false);
         }
 

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="~{/home/_layout/common-head::common-head(~{::link})}">
+<head th:include="~{home/_layout/common-head::common-head(~{::link})}">
     <!--<link rel="stylesheet" th:href="@{/static/css/video-js.css}">-->
     <link href="http://vjs.zencdn.net/6.9.0/video-js.css" rel="stylesheet">
 </head>
 <body>
-<div th:replace="~{/home/_layout/header::header}"></div>
+<div th:replace="~{home/_layout/header::header}"></div>
 <div class="container">
     <div class="page-content-top">
         <div class="section-bg"></div>
@@ -58,7 +58,7 @@
 
                 <div class="section-content">
                     <video th:if="${model.type == '视频' || model.type == '音频'}" id="my-video" class="video-js" controls preload="auto" width="660" height="400" data-setup="{}">
-                        <source th:src="@{${model.url}}">
+                        <source th:src="@{${model.url}}" type="video/mp4">
                         <p class="vjs-no-js">
                             你的浏览器不支持播放此视频！
                         </p>
@@ -66,9 +66,13 @@
 
                     <img th:if="${model.type == '图片'}" th:src="@{${model.url}}" alt="" style="width: 100%;">
 
-                    <iframe th:if="${model.type == 'PPT'}" th:src="'https://view.officeapps.live.com/op/embed.aspx?src=' + @{${model.url}}" width="100%" height="500px" frameborder="0"></iframe>
+                    <iframe th:if="${model.type == 'PPT'}" th:src="'https://view.officeapps.live.com/op/embed.aspx?src=' + ${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + ${model.url}" width="100%" height="500px" frameborder="0"></iframe>
 
-                    <iframe th:if="${model.type == 'Word' || model.type == 'Excel'}" th:src="'https://view.officeapps.live.com/op/embed.aspx?src=' + @{${model.url}}" width="100%" height="860px" frameborder="0"></iframe>
+                    <!--<iframe th:if="${model.type == 'PPT'}" src="https://view.officeapps.live.com/op/embed.aspx?src=http%3a%2f%2fvideo.ch9.ms%2fbuild%2f2011%2fslides%2fTOOL-532T_Sutter.pptx" width="100%" height="500px" frameborder="0"></iframe>-->
+
+                    <iframe th:if="${model.type == 'Word' || model.type == 'Excel'}" th:src="'https://view.officeapps.live.com/op/embed.aspx?src=' + ${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath()} + ${model.url}" width="100%" height="860px" frameborder="0"></iframe>
+
+                    <!--<iframe th:if="${model.type == 'Word' || model.type == 'Excel'}" src="https://view.officeapps.live.com/op/embed.aspx?src=newteach.pbworks.com%2Ff%2Fele%2Bnewsletter.docx" width="100%" height="860px" frameborder="0"></iframe>-->
 
                     <iframe th:if="${model.type == '纯文本'}" th:src="@{${model.url}}" width="100%" height="500px" frameborder="0"></iframe>
 
@@ -81,8 +85,8 @@
         <div class="clearfix"></div>
     </div>
 </div>
-<div th:replace="~{/home/_layout/footer::footer}"></div>
-<th:block th:include="~{/home/_layout/common-js::common-js(~{::script})}">
+<div th:replace="~{home/_layout/footer::footer}"></div>
+<th:block th:include="~{home/_layout/common-js::common-js(~{::script})}">
     <!--<script th:src="@{/static/js/videojs-ie8.min.js}"></script>-->
     <!--<script th:src="@{/static/js/video.js}"></script>-->
     <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="~{/home/_layout/common-head::common-noarg-head}">
+<head th:include="~{home/_layout/common-head::common-noarg-head}">
 </head>
 <body>
-<div th:replace="~{/home/_layout/header::header}"></div>
+<div th:replace="~{home/_layout/header::header}"></div>
 <div class="container">
     <div class="page-content-top">
         <div class="section-bg"></div>
@@ -105,8 +105,8 @@
         <div class="clearfix"></div>
     </div>
 </div>
-<div th:replace="~{/home/_layout/footer::footer}"></div>
-<th:block th:include="~{/home/_layout/common-js::common-noarg-js}">
+<div th:replace="~{home/_layout/footer::footer}"></div>
+<th:block th:include="~{home/_layout/common-js::common-noarg-js}">
 </th:block>
 </body>
 </html>

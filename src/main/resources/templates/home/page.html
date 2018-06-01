@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="~{/home/_layout/common-head::common-noarg-head}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="~{home/_layout/common-head::common-noarg-head}">
 </head>
 <body>
-<div th:replace="~{/home/_layout/header::header}"></div>
+<div th:replace="~{home/_layout/header::header}"></div>
 <div class="container">
     <div class="page-content-top">
         <div class="section-bg"></div>
@@ -14,14 +14,23 @@
             <div class="nav-section">
                 <div class="section-bg"></div>
                 <ul>
-                    <li>
-                        <a th:href="@{/resource}">资源平台</a>
+                    <li sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/login}">登录</a>
                     </li>
                     <li>
                         <a target="_blank" href="http://127.0.0.1/bbs/forum.php">互动平台</a>
                     </li>
-                    <li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/resource}">资源平台</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
                         <a th:href="@{/homework}">作业提交</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_TEACHER')">
+                        <a th:href="@{/admin}" target="_blank">后台管理系统</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/logout}">注销（<span sec:authentication="name"></span>）</a>
                     </li>
                 </ul>
             </div>
@@ -62,8 +71,8 @@
         <div class="clearfix"></div>
     </div>
 </div>
-<div th:replace="~{/home/_layout/footer::footer}"></div>
-<th:block th:include="~{/home/_layout/common-js::common-noarg-js}">
+<div th:replace="~{home/_layout/footer::footer}"></div>
+<th:block th:include="~{home/_layout/common-js::common-noarg-js}">
 </th:block>
 </body>
 </html>

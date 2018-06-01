@@ -7,21 +7,21 @@ spring:
     static-locations: classpath:/static/
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      max-file-size: 500MB
+      max-request-size: 500MB
 server:
   port: 9999
 debug: true
 app:
   upload:
     image:
-      local-path: D:/szxhcl/upload/images/
+      local-path: C:/szxhcl/upload/images/
       url-path: /images/
       allow-types: jpg,jpeg,gif,bmp,png
-      max-size: 5000000
+      max-size: 20000000
       file-name-template: $TIMESTAMP$_$FILENAME$
     file:
-      local-path: D:/szxhcl/upload/files/
+      local-path: C:/szxhcl/upload/files/
       url-path: /files/
-      max-size: 20000000
+      max-size: 500000000
       file-name-template: $TIMESTAMP$_$FILENAME$

@@ -4,14 +4,14 @@
 <!--[if IE 9]> <html lang="en" class="ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
 
 <!--[if !IE]><!--> <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
-<head th:include="~{/admin/_layout/common-head::common-head(${#strings.isEmpty(model.id) ? '添加作业' : '修改作业'},~{::link})}">
+<head th:include="~{admin/_layout/common-head::common-head(${#strings.isEmpty(model.id) ? '添加作业' : '修改作业'},~{::link})}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/select2_metro.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/datetimepicker.css}">
 </head>
 <body class="page-header-fixed">
-<div th:replace="~{/admin/_layout/header::header}"></div>
+<div th:replace="~{admin/_layout/header::header}"></div>
 <div class="page-container row-fluid">
-    <div th:replace="~{/admin/_layout/sidebar::sidebar('homework')}"></div>
+    <div th:replace="~{admin/_layout/sidebar::sidebar('homework')}"></div>
 
     <!-- BEGIN PAGE -->
 
@@ -178,8 +178,8 @@
     <!-- END PAGE -->
 
 </div>
-<div th:replace="~{/admin/_layout/footer::footer}"></div>
-<th:block th:replace="~{/admin/_layout/common-js::common-js(~{::script})}">
+<div th:replace="~{admin/_layout/footer::footer}"></div>
+<th:block th:replace="~{admin/_layout/common-js::common-js(~{::script})}">
     <script type="text/javascript" th:src="@{/static/js/select2.min.js}"></script>
 
     <script type="text/javascript" th:src="@{/static/js/bootstrap-datetimepicker.js}"></script>
@@ -202,7 +202,7 @@
             App.init();
 
             $(".form_datetime").datetimepicker({
-                format: "yyyy-mm-dd hh:mm:ss",
+                format: "yyyy-mm-dd hh:ii",
                 pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
             });
 

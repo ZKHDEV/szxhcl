@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="~{/home/_layout/common-head::common-head(~{::link})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="~{home/_layout/common-head::common-head(~{::link})}">
     <link rel="stylesheet" th:href="@{/static/css/pageSwitch.min.css}">
 </head>
 <body>
-    <div th:replace="~{/home/_layout/header::header}"></div>
+    <div th:replace="~{home/_layout/header::header}"></div>
     <div class="container">
         <div class="slideshow" id="slideshow">
             <div class="sections">
@@ -31,7 +31,7 @@
                             <div class="section-bg" th:style="'background-image:url(' + @{${cls.banner}} + ')'"></div>
                             <h1><a th:href="@{'/news/class/' + ${cls.id}}" th:text="${cls.className}"></a></h1>
                         </div>
-                        <div class="section-content">
+                        <div class="section-content news-content">
                             <ul>
                                 <li th:each="news,newsStat : ${cls.newsList}" th:if="${newsStat.index < 8}">
                                     <a th:href="@{'/news/' + ${news.id}}" th:title="${news.title}" th:text="${news.title}"></a>
@@ -46,14 +46,23 @@
                 <div class="nav-section">
                     <div class="section-bg"></div>
                     <ul>
+                        <li sec:authorize="!isAuthenticated()">
+                            <a th:href="@{/login}">登录</a>
+                        </li>
                         <li>
+                            <a target="_blank" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':9998/bbs'} ">互动平台</a>
+                        </li>
+                        <li sec:authorize="isAuthenticated()">
                             <a th:href="@{/resource}">资源平台</a>
                         </li>
-                        <li>
-                            <a target="_blank" href="http://127.0.0.1/bbs/forum.php">互动平台</a>
-                        </li>
-                        <li>
+                        <li sec:authorize="isAuthenticated()">
                             <a th:href="@{/homework}">作业提交</a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_TEACHER')">
+                            <a th:href="@{/admin}" target="_blank">后台管理系统</a>
+                        </li>
+                        <li sec:authorize="isAuthenticated()">
+                            <a th:href="@{/logout}">注销（<span sec:authentication="name"></span>）</a>
                         </li>
                     </ul>
                 </div>
@@ -73,8 +82,8 @@
             <div class="clearfix"></div>
         </div>
     </div>
-    <div th:replace="~{/home/_layout/footer::footer}"></div>
-    <th:block th:include="~{/home/_layout/common-js::common-js(~{::script})}">
+    <div th:replace="~{home/_layout/footer::footer}"></div>
+    <th:block th:include="~{home/_layout/common-js::common-js(~{::script})}">
         <script th:src="@{/static/js/pageSwitch.min.js}"></script>
         <script>
             $("#slideshow").PageSwitch({

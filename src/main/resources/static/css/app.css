@@ -325,6 +325,9 @@ acronym {
     color: #247CC1;
 }
 
+.news-content {
+    min-height: 208px;
+}
 
 .main-section {
     margin: 0 20px 20px 0;
