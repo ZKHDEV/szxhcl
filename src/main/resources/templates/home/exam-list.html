@@ -7,25 +7,13 @@
 <div class="container">
     <div class="page-content-top">
         <div class="section-bg"></div>
-        <h1 th:text="${model.className}"></h1>
+        <h1>在线考试</h1>
     </div>
     <div class="page-content">
         <div class="left-page-content">
             <div class="nav-section">
                 <div class="section-bg"></div>
                 <ul th:replace="~{home/_layout/component::entry}"></ul>
-            </div>
-            <div class="link-section">
-                <div class="section-head">
-                    <h1 th:text="${model.className}"></h1>
-                </div>
-                <div class="section-content">
-                    <ul>
-                        <li th:each="item : ${modelList}">
-                            <a th:href="@{'/' + ${type} + '/' + ${item.id}}" th:text="${item.title}" th:title="${item.title}"></a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
         <div class="right-page-content">
@@ -35,18 +23,22 @@
                         <a th:href="@{/index}">首页</a>&nbsp;>&nbsp;
                     </li>
                     <li>
-                        <a th:href="@{'/' + ${type} + '/class/' + ${model.classId}}" th:text="${model.className}"></a>&nbsp;>&nbsp;
-                    </li>
-                    <li>
-                        <a th:href="@{'/' + ${type} + '/' + ${model.id}}" th:text="${model.title}"></a>
+                        <a th:href="@{/exam}">在线考试</a>
                     </li>
                 </ul>
             </div>
             <div class="page-section">
                 <div class="section-head">
-                    <h1 th:text="${model.title}"></h1>
+                    <h1>试卷</h1>
                 </div>
-                <div class="section-content" th:utext="${model.content}"></div>
+                <div class="section-content">
+                    <ul>
+                        <li th:each="exam : ${examList}">
+                            <a th:href="@{'/exam/' + ${exam.id}}" th:title="${exam.title}" th:text="${exam.title}"></a>
+                            <span th:text="${#strings.substring(exam.createDt,0,10)}"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="clearfix"></div>

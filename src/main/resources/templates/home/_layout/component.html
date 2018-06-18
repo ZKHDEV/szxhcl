@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<body>
+<ul th:fragment="entry">
+    <li sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}">登录</a>
+    </li>
+    <li>
+        <a target="_blank" href="http://127.0.0.1/bbs/forum.php">互动平台</a>
+    </li>
+    <li>
+        <a th:href="@{/resource}">资源平台</a>
+    </li>
+    <li>
+        <a th:href="@{/exam}">在线考试</a>
+    </li>
+    <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/homework}">作业提交</a>
+    </li>
+    <li sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_TEACHER')">
+        <a th:href="@{/admin}" target="_blank">后台管理系统</a>
+    </li>
+    <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}">注销（<span sec:authentication="name"></span>）</a>
+    </li>
+</ul>
+</body>
+
+</html>

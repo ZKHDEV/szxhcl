@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="~{home/_layout/common-head::common-noarg-head}">
+</head>
+<body>
+<div th:replace="~{home/_layout/header::header}"></div>
+<div class="container">
+    <div class="page-content-top">
+        <div class="section-bg"></div>
+        <h1>在线考试</h1>
+    </div>
+    <div class="page-content">
+        <div class="left-page-content">
+            <div class="nav-section">
+                <div class="section-bg"></div>
+                <ul th:replace="~{home/_layout/component::entry}"></ul>
+            </div>
+            <div class="link-section">
+                <div class="section-head">
+                    <h1>试卷</h1>
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li th:each="exam,examStat : ${examList}" th:if="${examStat.index < 10}">
+                            <a th:href="@{'/exam/' + ${exam.id}}" th:text="${exam.title}" th:title="${exam.title}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="right-page-content">
+            <div class="bread-nav">
+                <ul>
+                    <li>
+                        <a th:href="@{/index}">首页</a>&nbsp;>&nbsp;
+                    </li>
+                    <li>
+                        <a th:href="@{/exam}">在线考试</a>&nbsp;>&nbsp;
+                    </li>
+                    <li>
+                        <a th:href="@{'/exam/' + ${model.id}}" th:text="${model.title}"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-section">
+                <div class="section-head">
+                    <h1 th:text="${model.title}"></h1>
+                </div>
+                <form id="echeckForm" th:action="@{'/exam/' + ${model.id}}" th:method="post" th:if="${resType == 'question'}">
+                    <input type="hidden" name="userAns" id="userAns">
+                </form>
+                <div class="exam-item" th:each="choice : ${model.choiceList}" th:if="${resType == 'question'}">
+                    <p class="exam-question" th:text="${choice.no} + '、' + ${choice.title}"></p>
+                    <p><label><input class="userAns" type="radio" th:name="'userAns' + ${choice.no}" value="A" th:text="' A、' + ${choice.optionA}"></label></p>
+                    <p><label><input class="userAns" type="radio" th:name="'userAns' + ${choice.no}" value="B" th:text="' B、' + ${choice.optionB}"></label></p>
+                    <p><label><input class="userAns" type="radio" th:name="'userAns' + ${choice.no}" value="C" th:text="' C、' + ${choice.optionC}"></label></p>
+                    <p><label><input class="userAns" type="radio" th:name="'userAns' + ${choice.no}" value="D" th:text="' D、' + ${choice.optionD}"></label></p>
+                </div>
+                <div class="exam-submit" th:if="${resType == 'question'}">
+                    <a href="javascript:void(0)" th:onclick="'submitExamCheck(' + ${#lists.size(model.choiceList)} + ')'">提交</a>
+                </div>
+                <div class="exam-item" th:each="choice : ${model.choiceList}" th:if="${resType == 'result'}">
+                    <p class="exam-question" th:text="${choice.no} + '、' + ${choice.title}"></p>
+                    <p th:class="${choice.answer == 'A' ? 'right' : (choice.userAns == 'A' ? 'error' : '')}" th:text="' A、' + ${choice.optionA}"></p>
+                    <p th:class="${choice.answer == 'B' ? 'right' : (choice.userAns == 'B' ? 'error' : '')}" th:text="' B、' + ${choice.optionB}"></p>
+                    <p th:class="${choice.answer == 'C' ? 'right' : (choice.userAns == 'C' ? 'error' : '')}" th:text="' C、' + ${choice.optionC}"></p>
+                    <p th:class="${choice.answer == 'D' ? 'right' : (choice.userAns == 'D' ? 'error' : '')}" th:text="' D、' + ${choice.optionD}"></p>
+                    <div class="exam-note" th:if="${!#strings.isEmpty(choice.note)}">
+                        <b>解读：</b>
+                        <span th:text="${choice.note}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div th:replace="~{home/_layout/footer::footer}"></div>
+<th:block th:include="~{home/_layout/common-js::common-noarg-js}">
+</th:block>
+</body>
+</html>

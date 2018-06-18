@@ -1,99 +1,79 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="~{home/_layout/common-head::common-head(~{::link})}">
     <link rel="stylesheet" th:href="@{/static/css/pageSwitch.min.css}">
 </head>
 <body>
-    <div th:replace="~{home/_layout/header::header}"></div>
-    <div class="container">
+<div th:replace="~{home/_layout/header::header}"></div>
+<div class="container">
+    <div class="left-content">
+        <div class="main-section">
+            <div class="section-head">
+                <h1>课程简介</h1>
+            </div>
+            <div class="section-content" th:utext="${introduces}"></div>
+        </div>
+        <div class="news-section">
+            <div class="sub-section" th:each="cls : ${newsClassList}">
+                <div class="section-img-head">
+                    <div class="section-bg" th:style="'background-image:url(' + @{${cls.banner}} + ')'"></div>
+                    <h1><a th:href="@{'/news/class/' + ${cls.id}}" th:text="${cls.className}"></a></h1>
+                </div>
+                <div class="section-content news-content">
+                    <ul>
+                        <li th:each="news,newsStat : ${cls.newsList}" th:if="${newsStat.index < 8}">
+                            <a th:href="@{'/news/' + ${news.id}}" th:title="${news.title}" th:text="${news.title}"></a>
+                            <span th:text="${#strings.substring(news.createDt,0,10)}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
         <div class="slideshow" id="slideshow">
             <div class="sections">
-                <div class="section" th:id="'section' + ${itemStat.index}" th:each="item,itemStat : ${slideshowList}" th:style="'background-image: url(' + @{${item.url}} + ')'">
+                <div class="section" th:id="'section' + ${itemStat.index}" th:each="item,itemStat : ${slideshowList}"
+                     th:style="'background-image: url(' + @{${item.url}} + ')'">
                     <a th:href="@{${item.url}}" target="_blank">
                         <span th:text="${item.title}"></span>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="content">
-            <div class="left-content">
-                <div class="section">
-                    <div class="main-section">
-                        <div class="section-head">
-                            <h1>课程简介</h1>
-                        </div>
-                        <div class="section-content" th:utext="${introduces}"></div>
-                    </div>
-                </div>
-                <div class="section">
-                    <div class="sub-section" th:each="cls : ${newsClassList}">
-                        <div class="section-img-head">
-                            <div class="section-bg" th:style="'background-image:url(' + @{${cls.banner}} + ')'"></div>
-                            <h1><a th:href="@{'/news/class/' + ${cls.id}}" th:text="${cls.className}"></a></h1>
-                        </div>
-                        <div class="section-content news-content">
-                            <ul>
-                                <li th:each="news,newsStat : ${cls.newsList}" th:if="${newsStat.index < 8}">
-                                    <a th:href="@{'/news/' + ${news.id}}" th:title="${news.title}" th:text="${news.title}"></a>
-                                    <span th:text="${#strings.substring(news.createDt,0,10)}"></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    </div>
+    <div class="right-content">
+        <div class="nav-section">
+            <div class="section-bg"></div>
+            <ul th:replace="~{home/_layout/component::entry}"></ul>
+        </div>
+        <div class="link-section">
+            <div class="section-head">
+                <h1>友情链接</h1>
             </div>
-            <div class="right-content">
-                <div class="nav-section">
-                    <div class="section-bg"></div>
-                    <ul>
-                        <li sec:authorize="!isAuthenticated()">
-                            <a th:href="@{/login}">登录</a>
-                        </li>
-                        <li>
-                            <a target="_blank" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':9998/bbs'} ">互动平台</a>
-                        </li>
-                        <li sec:authorize="isAuthenticated()">
-                            <a th:href="@{/resource}">资源平台</a>
-                        </li>
-                        <li sec:authorize="isAuthenticated()">
-                            <a th:href="@{/homework}">作业提交</a>
-                        </li>
-                        <li sec:authorize="hasRole('ROLE_ADMIN') || hasRole('ROLE_TEACHER')">
-                            <a th:href="@{/admin}" target="_blank">后台管理系统</a>
-                        </li>
-                        <li sec:authorize="isAuthenticated()">
-                            <a th:href="@{/logout}">注销（<span sec:authentication="name"></span>）</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="link-section">
-                    <div class="section-head">
-                        <h1>友情链接</h1>
-                    </div>
-                    <div class="section-content">
-                        <ul>
-                            <li th:each="item : ${linkList}">
-                                <a target="_blank" th:href="${item.url}" th:text="${item.title}"></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="section-content">
+                <ul>
+                    <li th:each="item : ${linkList}">
+                        <a target="_blank" th:href="${item.url}" th:text="${item.title}"></a>
+                    </li>
+                </ul>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
-    <div th:replace="~{home/_layout/footer::footer}"></div>
-    <th:block th:include="~{home/_layout/common-js::common-js(~{::script})}">
-        <script th:src="@{/static/js/pageSwitch.min.js}"></script>
-        <script>
-            $("#slideshow").PageSwitch({
-                direction: 'horizontal',
-                easing: 'ease-in',
-                duration: 1000,
-                autoPlay: true,
-                pagination: true
-            });
-        </script>
-    </th:block>
+    <div class="clearfix"></div>
+</div>
+<div th:replace="~{home/_layout/footer::footer}"></div>
+<th:block th:include="~{home/_layout/common-js::common-js(~{::script})}">
+    <script th:src="@{/static/js/pageSwitch.min.js}"></script>
+    <script>
+        $("#slideshow").PageSwitch({
+            direction: 'horizontal',
+            easing: 'ease-in',
+            duration: 1000,
+            autoPlay: true,
+            pagination: true
+        });
+    </script>
+</th:block>
 </body>
 </html>

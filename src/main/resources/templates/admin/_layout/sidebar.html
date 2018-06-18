@@ -181,6 +181,46 @@
 
         </li>
 
+        <li sec:authorize="hasRole('ROLE_ADMIN') OR hasRole('ROLE_TEACHER')" th:class="${pageType == 'exam' ? 'active open' : ''}">
+
+            <a class="active" th:href="@{/admin/exam/list}">
+
+                <i class="icon-edit"></i>
+
+                <span class="title">试卷管理</span>
+
+                <span th:if="${pageType == 'exam'}" class="selected"></span>
+
+                <span th:class="${pageType == 'exam' ? 'arrow open' : 'arrow'}"></span>
+
+            </a>
+
+            <ul class="sub-menu" th:style="${pageType == 'exam' ? 'display: block;' : ''}">
+
+                <li>
+
+                    <a th:href="@{/admin/exam/edit}">
+
+                        添加试卷
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a th:href="@{/admin/exam/list}">
+
+                        试卷管理
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </li>
+
         <li sec:authorize="hasRole('ROLE_ADMIN') OR hasRole('ROLE_TEACHER')" th:class="${pageType == 'homework' ? 'active open' : ''}">
 
             <a class="active" th:href="@{/admin/homework/list}">

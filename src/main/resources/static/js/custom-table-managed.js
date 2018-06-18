@@ -37,6 +37,7 @@ var TableManaged = function () {
                     }
                     var url = $(this).attr("tarUrl");
                     $.post(url, {ids:ids}, function (data) {
+                        console.log(data);
                         window.location.href = data;
                     });
                 } else {
@@ -391,6 +392,65 @@ var TableManaged = function () {
                 ]
             });
 
+            //exam table
+            $('#exam-table').dataTable({
+                "aoColumns": [
+                    { "bSortable": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "bSortable": false }
+                ],
+                "aaSorting": [[ 5, "desc" ]],
+                "aLengthMenu": [
+                    [10, 15, 20, -1],
+                    [10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "bFilter": false,
+                "iDisplayLength": 10,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": oLanguage,
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [0,7]
+                }
+                ]
+            });
+
+            //choice table
+            $('#choice-table').dataTable({
+                "aoColumns": [
+                    { "bSortable": false },
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "bSortable": false }
+                ],
+                "aaSorting": [[ 5, "asc" ]],
+                "aLengthMenu": [
+                    [10, 15, 20, -1],
+                    [10, 15, 20, "All"] // change per page values here
+                ],
+                // set the initial value
+                "bFilter": false,
+                "iDisplayLength": 10,
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": oLanguage,
+                "aoColumnDefs": [{
+                    'bSortable': false,
+                    'aTargets': [0,7]
+                }
+                ]
+            });
         }
 
     };

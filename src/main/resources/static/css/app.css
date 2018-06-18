@@ -173,13 +173,13 @@ acronym {
 /* Home Page */
 
 .container {
-    margin: 0 auto 160px auto;
+    margin: 40px auto 160px auto;
     width: 1000px;
 }
 
 .slideshow {
     position: relative;
-    margin: 40px 0 20px 0;
+    margin-bottom: 20px;
     overflow: hidden;
     height: 300px;
     background-color: #FFFFFF;
@@ -214,16 +214,13 @@ acronym {
 
 .left-content {
     float: left;
-    width: 740px;
+    margin-right: 20px;
+    width: 720px;
 }
 
 .right-content {
     float: left;
     width: 260px;
-}
-
-.content .section {
-    width: 740px;
 }
 
 .section-head {
@@ -330,15 +327,17 @@ acronym {
 }
 
 .main-section {
-    margin: 0 20px 20px 0;
-    width: 720px;
+    margin-bottom: 20px;
 }
 
 .sub-section {
     float: left;
     margin: 0 20px 20px 0;
     width: 350px;
-    height: 300px;
+}
+
+.sub-section:nth-child(even) {
+    margin-right: 0;
 }
 
 .nav-section {
@@ -411,7 +410,7 @@ acronym {
 
 .page-content-top {
     position: relative;
-    margin: 40px 0 20px 0;
+    margin-bottom: 20px;
     overflow: hidden;
     height: 160px;
     line-height: 160px;
@@ -817,4 +816,62 @@ acronym {
 
 .file-upload:hover {
     background-color: #0F5890;
+}
+
+/* Exam Page */
+
+.exam-item {
+    margin-top: 10px;
+    padding: 20px;
+    background-color: #FFFFFF;
+}
+
+.exam-item p {
+    margin-bottom: 6px;
+}
+
+.exam-item p:first-child {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.exam-item p.right {
+    color: #00FF00;
+}
+
+.exam-item p.error {
+    color: #FF0000;
+}
+
+.exam-note {
+    margin-top: 20px;
+    padding: 16px;
+    background-color: #F2F2F2;
+}
+
+.exam-submit {
+    margin-top: 10px;
+    background-color: #FFFFFF;
+    padding: 20px;
+}
+
+.exam-submit a {
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    background-color: #0067B9;
+    text-align: center;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.exam-submit a:link,
+.exam-submit a:visited {
+    background-color: #0067B9;
+}
+
+.exam-submit a:hover,
+.exam-submit a:active {
+    background-color: #247CC1;
 }

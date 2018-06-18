@@ -5,7 +5,6 @@ import cn.edu.gdou.szxhcl.model.vo.article.ArticleClassVo;
 import cn.edu.gdou.szxhcl.model.vo.resource.ResClassVo;
 import cn.edu.gdou.szxhcl.model.vo.resource.ResQueryVo;
 import cn.edu.gdou.szxhcl.model.vo.resource.ResourceVo;
-import cn.edu.gdou.szxhcl.service.ArticleService;
 import cn.edu.gdou.szxhcl.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,14 +22,6 @@ public class ResourceController extends BaseController {
 
     @Autowired
     private ResourceService resourceService;
-
-    @Autowired
-    private ArticleService articleService;
-
-    @ModelAttribute
-    public List<ArticleClassVo> getArticleClassList() {
-        return articleService.getAllArticleClassList();
-    }
 
     @GetMapping("")
     public String resource(ModelMap model, ResQueryVo queryVo, @ModelAttribute List<ArticleClassVo> articleClassVoList){

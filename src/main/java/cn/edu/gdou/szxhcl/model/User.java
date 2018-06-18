@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -36,6 +37,12 @@ public class User {
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<HomeworkSubmit> homeworkSubmitList;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<Exam> examList;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    private List<Choice> choiceList;
 
     public String getId() {
         return id;
@@ -139,5 +146,21 @@ public class User {
 
     public void setHomeworkSubmitList(List<HomeworkSubmit> homeworkSubmitList) {
         this.homeworkSubmitList = homeworkSubmitList;
+    }
+
+    public List<Exam> getExamList() {
+        return examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
+    }
+
+    public List<Choice> getChoiceList() {
+        return choiceList;
+    }
+
+    public void setChoiceList(List<Choice> choiceList) {
+        this.choiceList = choiceList;
     }
 }
