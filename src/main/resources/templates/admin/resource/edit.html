@@ -96,8 +96,6 @@
 
                                 <input type="hidden" name="id" th:field="*{id}">
 
-                                <input type="hidden" name="url" th:field="*{url}">
-
                                 <input type="hidden" name="size" th:field="*{size}">
 
                                 <div th:class="${(errors != null && errors['fileName'] != null) ? 'control-group error' : 'control-group'}">
@@ -114,13 +112,15 @@
 
                                 </div>
 
-                                <div class="control-group">
+                                <div th:class="${(errors != null && errors['url'] != null) ? 'control-group error' : 'control-group'}">
 
-                                    <label class="control-label">Url</label>
+                                    <label class="control-label">Url<span class="required">*</span></label>
 
                                     <div class="controls">
 
-                                        <a th:href="@{*{url}}" th:text="*{url}" target="_blank"></a>
+                                        <input name="url" type="text" class="m-wrap span12" th:field="*{url}">
+
+                                        <span class="help-block" th:if="${errors != null && errors['url'] != null}" th:text="${errors['url']}"></span>
 
                                     </div>
 

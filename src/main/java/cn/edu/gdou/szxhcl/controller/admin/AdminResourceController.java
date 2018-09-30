@@ -62,6 +62,14 @@ public class AdminResourceController extends UploadController {
         return view("admin/resource/list");
     }
 
+    @GetMapping("edit")
+    public String editLink(ModelMap model, @ModelAttribute List<ResClassVo> resClassVoList){
+        ResourceVo resourceVo = new ResourceVo();
+        model.put("classList", resClassVoList);
+        model.put("model", resourceVo);
+        return view("admin/resource/edit");
+    }
+
     @GetMapping("edit/{id}")
     public String edit(ModelMap model, @PathVariable("id") String id
             , @ModelAttribute List<ResClassVo> resClassVoList){

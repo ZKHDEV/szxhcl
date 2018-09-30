@@ -7,7 +7,7 @@
         <a th:href="@{/login}">登录</a>
     </li>
     <li>
-        <a target="_blank" href="http://127.0.0.1/bbs/forum.php">互动平台</a>
+        <a target="_blank" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName()} + ':9998/bbs'">互动平台</a>
     </li>
     <li>
         <a th:href="@{/resource}">资源平台</a>
